@@ -1,0 +1,41 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="All rights reserved"
+
+issueTrackerURL="https://github.com/psyGamer/eCon/issues"
+
+[[mods]]
+
+modId="econ"
+version="${file.jarVersion}"
+
+displayName="Mod"
+
+# updateJSONURL="https://curseforge.com/minecraft/mc-mods/mod"
+# displayURL="http://example.com/"
+# logoFile="mod.png"
+
+# credits="Thanks for this example mod goes to Java"
+authors="psyGamer"
+
+description='''
+Bring economy into your life.
+'''
+
+[[dependencies.econ]]
+   modId="forge"
+   versionRange="[35,)"
+
+   ordering="NONE"
+   side="BOTH"
+
+   mandatory=true
+
+[[dependencies.econ]]
+   modId="minecraft"
+   versionRange="[1.16.4,1.17)"
+
+   ordering="NONE"
+   side="BOTH"
+
+   mandatory=true
