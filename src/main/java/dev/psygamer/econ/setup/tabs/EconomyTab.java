@@ -12,6 +12,6 @@ public class EconomyTab extends ItemGroup {
 	
 	@Override
 	public ItemStack makeIcon() {
-		return new ItemStack(ItemRegistry.FIFTY_EUROS.get());
+		return new ItemStack(ItemRegistry.FIFTY_EUROS);
 	}
 }
