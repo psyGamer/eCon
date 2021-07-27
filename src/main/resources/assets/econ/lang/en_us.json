@@ -1,0 +1,12 @@
+{
+	"item.econ.one_euro": "1€",
+	"item.econ.five_euros": "5€",
+	"item.econ.ten_euros": "10€",
+	"item.econ.twenty_euros": "20€",
+	"item.econ.fifty_euros": "50€",
+	"item.econ.one_hundert_euros": "100€",
+	"item.econ.two_hundert_euros": "200€",
+	"item.econ.five_hundert_euros": "500€",
+
+	"itemGroup.economy": "eCon - Money"
+}
