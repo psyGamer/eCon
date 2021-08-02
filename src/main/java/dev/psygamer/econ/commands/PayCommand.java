@@ -1,11 +1,11 @@
 package dev.psygamer.econ.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
@@ -14,11 +14,11 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+
+import java.time.Instant;
 
 public class PayCommand {
 	
@@ -35,6 +35,12 @@ public class PayCommand {
 	}
 	
 	private static int handleCommand(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+		if (context.getSource().getServer().isSingleplayer()) {
+			context.getSource().getEntity().sendMessage(ECon.COMMAND_DISABLED_MESSAGE, context.getSource().getEntity().getUUID());
+			
+			return 0;
+		}
+		
 		final ServerPlayerEntity target = EntityArgument.getPlayer(context, "target");
 		final long amount = LongArgumentType.getLong(context, "amount");
 		
@@ -52,7 +58,7 @@ public class PayCommand {
 			}
 			
 			TransactionHandler.processTransaction(
-					new Transaction(context.getSource().getEntity().getUUID(), target.getUUID(), amount)
+					new Transaction(context.getSource().getEntity().getUUID(), target.getUUID(), amount, Instant.now().getEpochSecond())
 			);
 			
 			player.sendMessage(

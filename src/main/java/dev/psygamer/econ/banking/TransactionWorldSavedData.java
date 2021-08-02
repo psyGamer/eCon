@@ -20,14 +20,17 @@ public class TransactionWorldSavedData extends WorldSavedData {
 	public void load(final CompoundNBT compound) {
 		TransactionHandler.getTransactionHistory().clear();
 		
-		for (int i = 0 ; i < compound.getAllKeys().size() / 3 ; i++) {
-			final UUID sendingPlayerUUID = compound.getUUID(i + "_from");
-			final UUID receivingPlayerUUID = compound.getUUID(i + "_to");
-			final long transferAmount = compound.getLong(i + "_amount");
+		for (final String key : compound.getAllKeys()) {
+			final CompoundNBT transactionCompound = compound.getCompound(key);
 			
-			final Transaction transaction = new Transaction(sendingPlayerUUID, receivingPlayerUUID, transferAmount);
+			final UUID sendingPlayerUUID = transactionCompound.getUUID("from");
+			final UUID receivingPlayerUUID = transactionCompound.getUUID("to");
+			final long transferAmount = transactionCompound.getLong("amount");
+			final long timestamp = transactionCompound.getLong("time");
 			
-			TransactionHandler.registerTransaction(transaction);
+			TransactionHandler.registerTransaction(
+					new Transaction(sendingPlayerUUID, receivingPlayerUUID, transferAmount, timestamp)
+			);
 		}
 	}
 	
@@ -35,10 +38,14 @@ public class TransactionWorldSavedData extends WorldSavedData {
 	public CompoundNBT save(final CompoundNBT compound) {
 		for (int i = 0 ; i < TransactionHandler.getTransactionHistory().size() ; i++) {
 			final Transaction transaction = TransactionHandler.getTransactionHistory().get(i);
+			final CompoundNBT transactionCompound = new CompoundNBT();
 			
-			compound.putUUID(i + "_from", transaction.getSendingPlayer());
-			compound.putUUID(i + "_to", transaction.getReceivingPlayer());
-			compound.putLong(i + "_amount", transaction.getTransferAmount());
+			transactionCompound.putUUID("from", transaction.getSendingPlayer());
+			transactionCompound.putUUID("to", transaction.getReceivingPlayer());
+			transactionCompound.putLong("amount", transaction.getTransferAmount());
+			transactionCompound.putLong("time", transaction.getUnixTimestamp());
+			
+			compound.put(String.valueOf(i), transactionCompound);
 		}
 		
 		TransactionHandler.resolveDirty();

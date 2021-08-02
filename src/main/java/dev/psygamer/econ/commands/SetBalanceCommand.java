@@ -1,11 +1,11 @@
 package dev.psygamer.econ.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -30,6 +30,12 @@ public class SetBalanceCommand {
 	}
 	
 	private static int handleCommand(final CommandContext<CommandSource> context) throws CommandSyntaxException {
+		if (context.getSource().getServer().isSingleplayer()) {
+			context.getSource().getEntity().sendMessage(ECon.COMMAND_DISABLED_MESSAGE, context.getSource().getEntity().getUUID());
+			
+			return 0;
+		}
+		
 		final ServerPlayerEntity target = EntityArgument.getPlayer(context, "target");
 		final long balance = LongArgumentType.getLong(context, "balance");
 		

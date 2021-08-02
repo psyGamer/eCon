@@ -13,7 +13,9 @@ public class Transaction {
 	
 	private final UUID sendingPlayer;
 	private final UUID receivingPlayer;
+	
 	private final long transferAmount;
+	private final long unixTime;
 	
 	public UUID getSendingPlayer() {
 		return this.sendingPlayer;
@@ -27,16 +29,21 @@ public class Transaction {
 		return this.transferAmount;
 	}
 	
-	public Transaction(final UUID sendingPlayer, final UUID receivingPlayer, final long transferAmount) {
+	public long getUnixTimestamp() {
+		return this.unixTime;
+	}
+	
+	public Transaction(final UUID sendingPlayer, final UUID receivingPlayer, final long transferAmount, final long unixTime) {
 		this.sendingPlayer = sendingPlayer;
 		this.receivingPlayer = receivingPlayer;
 		this.transferAmount = transferAmount;
+		this.unixTime = unixTime;
 	}
 	
-	public Transaction(final String sendingPlayerName, final String receivingPlayerName, final long transferAmount) {
-		this.sendingPlayer = getOfflinePlayerUUID(sendingPlayerName);
-		this.receivingPlayer = getOfflinePlayerUUID(receivingPlayerName);
-		this.transferAmount = transferAmount;
+	public Transaction(final String sendingPlayerName, final String receivingPlayerName, final long transferAmount, final long unixTime) {
+		this(getOfflinePlayerUUID(sendingPlayerName), getOfflinePlayerUUID(receivingPlayerName),
+				transferAmount, unixTime
+		);
 	}
 	
 	private static UUID getOfflinePlayerUUID(final String playerName) {

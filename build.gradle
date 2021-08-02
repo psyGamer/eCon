@@ -18,11 +18,11 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
     mappings channel: 'official', version: '1.16.4'
-    
+
     runs {
         client {
             workingDirectory project.file('run')
-            
+
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -53,9 +53,9 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             args '--mod', 'econ', '--all',
-                '--existing', file('src/main/resources/').toString(),
-                '--existing', file('src/generated/resources/').toString(),
-                '--output', file('src/generated/resources/')
+                    '--existing', file('src/main/resources/').toString(),
+                    '--existing', file('src/generated/resources/').toString(),
+                    '--output', file('src/generated/resources/')
 
             mods {
                 econ {
@@ -68,8 +68,14 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.37'
+
+    implementation 'com.github.SparklingComet:java-mojang-api:-SNAPSHOT'
 }
 
 jar {
