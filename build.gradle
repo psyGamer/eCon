@@ -1,14 +1,17 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
+        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: "com.github.johnrengelman.shadow"
 
 group = 'dev.psygamer'
 archivesBaseName = 'econ'
@@ -68,17 +71,49 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+configurations {
+    shadow
+
+    compile.extendsFrom shadow
+}
+
 repositories {
+    mavenCentral()
     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.4-35.1.37'
 
-    implementation 'com.github.SparklingComet:java-mojang-api:-SNAPSHOT'
+    shadow 'com.github.SparklingComet:java-mojang-api:-SNAPSHOT'
+    //implementation 'com.github.SparklingComet:java-mojang-api:-SNAPSHOT'
+}
+
+shadowJar {
+//    from zipTree(tasks.jar.getArchiveFile())
+
+//    archiveBaseName.set(tasks.jar.getArchiveBaseName())
+//    archiveVersion.set(tasks.jar.getArchiveVersion())
+
+    classifier 'shadow'
+    configurations = [project.configurations.shadow]
+
+
+    relocate 'org.apache.http', 'dev.psygamer.econ.org.apache.http'
+//    relocate 'org.apache.commons', 'dev.psygamer.econ.org.apache.commons'
+}
+
+reobf {
+    shadowJar {}
 }
 
 jar {
+    configurations.shadow.each {
+        from(project.zipTree(it)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
+
     manifest {
         attributes([
                 "Specification-Title"     : "econ",
@@ -92,4 +127,5 @@ jar {
     }
 }
 
-jar.finalizedBy('reobfJar')
+jar.finalizedBy 'reobfJar'
+jar.dependsOn shadowJar
