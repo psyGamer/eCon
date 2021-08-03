@@ -84,6 +84,10 @@ public class NewTransactionScreen extends Screen {
 			final UUID receivingUUID = getPlayerUUID();
 			final long amount = getAmount();
 			
+			if (receivingUUID == null || amount < 0) {
+				return;
+			}
+			
 			EConPacketHandler.INSTANCE.sendToServer(new TransactionMessage(receivingUUID, amount));
 			Minecraft.getInstance().player.closeContainer();
 		});
