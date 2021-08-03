@@ -197,11 +197,13 @@ public class PlayerHead extends Widget {
 					mojangAPI.connect();
 				}
 				
-				return mojangAPI.getNameHistoryOfPlayer(playerUUID.toString())
-						.keySet()
-						.stream()
-						.findFirst()
-						.orElseThrow(RuntimeException::new);
+				ECon.LOGGER.debug("Requesting name history of " + playerUUID);
+				
+				return mojangAPI.getNameHistoryOfPlayer(playerUUID.toString()).entrySet().stream()
+						.min((entryA, entryB) -> (int) (entryB.getValue() - entryA.getValue()))
+						.orElseThrow(RuntimeException::new)
+						.getKey();
+				
 			} catch (final RuntimeException ex) {
 				return fallbackName;
 			}
