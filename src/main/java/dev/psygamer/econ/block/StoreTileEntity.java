@@ -150,4 +150,14 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	public Container createMenu(final int windowID, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
 		return new StoreContainer(windowID, playerInventory, this);
 	}
+	
+	@Override
+	public CompoundNBT getUpdateTag() {
+		return save(new CompoundNBT());
+	}
+	
+	@Override
+	public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
+		load(state, tag);
+	}
 }

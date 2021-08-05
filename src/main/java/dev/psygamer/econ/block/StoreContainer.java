@@ -61,44 +61,69 @@ public class StoreContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack clicked(final int slotClicked, final int mouseButton, final ClickType type, final PlayerEntity playerEntity) {
-		if (slotClicked >= 0 && slotClicked < this.slots.size() &&
-				this.slots.get(slotClicked) instanceof StoreFakeSlot
-		) {
-			final StoreFakeSlot slot = (StoreFakeSlot) this.slots.get(slotClicked);
-			final ItemStack carried = playerEntity.inventory.getCarried();
-			
-			/*
-				0 - Left click
-				1 - Right click
-				2 - Mouse wheel click
-			 */
-			
-			if (mouseButton == 2) {
-				final ItemStack slotCopy = slot.getItem().copy();
-				
-				slotCopy.setCount(slotCopy.getMaxStackSize());
-				
-				return slotCopy;
-			}
-			
-			if (carried.getItem() == slot.getItem().getItem()) {
-				slot.increase(
-						mouseButton == 1 ? 1 : carried.getCount()
-				);
-			} else {
-				slot.set(carried);
-				
-				if (mouseButton == 1) {
-					slot.getItem().setCount(1);
-				}
-			}
-			
-			return carried;
+	public ItemStack clicked(final int slotId, final int dragType, final ClickType clickType, final PlayerEntity player) {
+		final Slot slot = slotId >= 0 ? this.slots.get(slotId) : null;
+		
+		if (!(slot instanceof StoreFakeSlot)) {
+			return super.clicked(slotId, dragType, clickType, player);
 		}
 		
-		return super.clicked(slotClicked, mouseButton, type, playerEntity);
+		if (dragType == -1 && clickType == ClickType.SWAP) {
+			return ItemStack.EMPTY;
+		}
+		
+		if (clickType == ClickType.QUICK_MOVE) {
+			slot.set(ItemStack.EMPTY);
+		} else if (!player.inventory.getCarried().isEmpty()) {
+			slot.set(player.inventory.getCarried().copy());
+		} else if (player.inventory.getCarried().isEmpty()) {
+			slot.set(ItemStack.EMPTY);
+		} else if (slot.mayPlace(player.inventory.getCarried())) {
+			slot.set(player.inventory.getCarried().copy());
+		}
+		
+		return player.inventory.getCarried();
 	}
+	
+	//	@Override
+//	public ItemStack clicked(final int slotClicked, final int mouseButton, final ClickType type, final PlayerEntity playerEntity) {
+//		if (slotClicked >= 0 && slotClicked < this.slots.size() &&
+//				this.slots.get(slotClicked) instanceof StoreFakeSlot
+//		) {
+//			final StoreFakeSlot slot = (StoreFakeSlot) this.slots.get(slotClicked);
+//			final ItemStack carried = playerEntity.inventory.getCarried();
+//
+//			/*
+//				0 - Left click
+//				1 - Right click
+//				2 - Mouse wheel click
+//			 */
+//
+//			if (mouseButton == 2) {
+//				final ItemStack slotCopy = slot.getItem().copy();
+//
+//				slotCopy.setCount(slotCopy.getMaxStackSize());
+//
+//				return slotCopy;
+//			}
+//
+//			if (carried.getItem() == slot.getItem().getItem()) {
+//				slot.increase(
+//						mouseButton == 1 ? 1 : carried.getCount()
+//				);
+//			} else {
+//				slot.set(carried);
+//
+//				if (mouseButton == 1) {
+//					slot.getItem().setCount(1);
+//				}
+//			}
+//
+//			return ItemStack.EMPTY;
+//		}
+//
+//		return super.clicked(slotClicked, mouseButton, type, playerEntity);
+//	}
 	
 	public StoreContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
 		this(windowId, playerInventory, getTileEntity(playerInventory, data));
