@@ -16,6 +16,8 @@ public class EConItemModelProvider extends ItemModelProvider {
 	protected void registerModels() {
 		final ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
 		
+		withExistingParent("store_block", modLoc("block/store_block"));
+		
 		builder(itemGenerated, "one_euro");
 		builder(itemGenerated, "five_euros");
 		builder(itemGenerated, "ten_euros");

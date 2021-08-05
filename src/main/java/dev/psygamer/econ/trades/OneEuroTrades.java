@@ -12,7 +12,7 @@ public class OneEuroTrades {
 		public DioriteTrade() {
 			super(
 					new ItemStack(Items.DIORITE, 15),
-					new ItemStack(ItemRegistry.ONE_EURO, 1),
+					new ItemStack(ItemRegistry.ONE_EURO.get(), 1),
 					7, 0, 1.5f
 			);
 		}
@@ -23,7 +23,7 @@ public class OneEuroTrades {
 		public CoarseDirtTrade() {
 			super(
 					new ItemStack(Items.COARSE_DIRT, 42),
-					new ItemStack(ItemRegistry.ONE_EURO, 1),
+					new ItemStack(ItemRegistry.ONE_EURO.get(), 1),
 					4, 0, 1.2f
 			);
 		}
@@ -34,7 +34,7 @@ public class OneEuroTrades {
 		public SnowballTrade() {
 			super(
 					new ItemStack(Items.SNOWBALL, 10),
-					new ItemStack(ItemRegistry.ONE_EURO, 1),
+					new ItemStack(ItemRegistry.ONE_EURO.get(), 1),
 					4, 0, 1.6f
 			);
 		}
@@ -46,7 +46,7 @@ public class OneEuroTrades {
 			super(
 					new ItemStack(Items.WOODEN_SHOVEL, 1),
 					new ItemStack(Items.WOODEN_HOE, 1),
-					new ItemStack(ItemRegistry.ONE_EURO, 1),
+					new ItemStack(ItemRegistry.ONE_EURO.get(), 1),
 					1, 1, 1.0f
 			);
 		}

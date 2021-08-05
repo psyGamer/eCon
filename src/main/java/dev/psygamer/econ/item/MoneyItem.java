@@ -1,4 +1,4 @@
-package dev.psygamer.econ.setup;
+package dev.psygamer.econ.item;
 
 import dev.psygamer.econ.banking.BankAccountHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,12 +16,10 @@ public class MoneyItem extends Item {
 	
 	private final long value;
 	
-	public MoneyItem(final String itemName, final long value) {
-		super(new Item.Properties().tab(TabRegistry.TAB_ECONOMY));
+	public MoneyItem(final long value) {
+		super(new Item.Properties().tab(TabRegistry.TAB_ECON));
 		
 		this.value = value;
-		
-		ItemRegistry.ITEMS.register(itemName, () -> this);
 	}
 	
 	@Override

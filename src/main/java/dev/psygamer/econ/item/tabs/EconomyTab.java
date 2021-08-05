@@ -1,4 +1,4 @@
-package dev.psygamer.econ.setup.tabs;
+package dev.psygamer.econ.item.tabs;
 
 import dev.psygamer.econ.setup.ItemRegistry;
 import net.minecraft.item.ItemGroup;
@@ -12,6 +12,6 @@ public class EconomyTab extends ItemGroup {
 	
 	@Override
 	public ItemStack makeIcon() {
-		return new ItemStack(ItemRegistry.FIFTY_EUROS);
+		return new ItemStack(ItemRegistry.FIFTY_EUROS.get());
 	}
 }

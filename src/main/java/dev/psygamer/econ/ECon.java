@@ -2,6 +2,8 @@ package dev.psygamer.econ;
 
 import com.mojang.brigadier.CommandDispatcher;
 import dev.psygamer.econ.banking.*;
+import dev.psygamer.econ.block.StoreRenderer;
+import dev.psygamer.econ.block.StoreScreen;
 import dev.psygamer.econ.client.KeybindingsRegistry;
 import dev.psygamer.econ.commands.GetBalanceCommand;
 import dev.psygamer.econ.commands.PayCommand;
@@ -13,7 +15,13 @@ import dev.psygamer.econ.network.client.TransactionHistoryMessage;
 import dev.psygamer.econ.proxy.ClientProxy;
 import dev.psygamer.econ.proxy.IProxy;
 import dev.psygamer.econ.proxy.ServerProxy;
+import dev.psygamer.econ.setup.BlockRegistry;
+import dev.psygamer.econ.setup.ContainerRegistry;
 import dev.psygamer.econ.setup.ItemRegistry;
+import dev.psygamer.econ.setup.TileEntityTypeRegistry;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
@@ -26,6 +34,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -65,7 +74,10 @@ public class ECon {
 		
 		proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 		
+		BlockRegistry.register();
 		ItemRegistry.register();
+		TileEntityTypeRegistry.register();
+		ContainerRegistry.register();
 	}
 	
 	private void onCommonSetup(final FMLCommonSetupEvent event) {
@@ -74,6 +86,11 @@ public class ECon {
 	
 	private void onClientSetup(final FMLClientSetupEvent event) {
 		KeybindingsRegistry.load();
+		ScreenManager.register(ContainerRegistry.STORE_BLOCK_CONTAINER.get(), StoreScreen::new);
+		
+		RenderTypeLookup.setRenderLayer(BlockRegistry.STORE_BLOCK.get(), RenderType.cutout());
+		
+		ClientRegistry.bindTileEntityRenderer(TileEntityTypeRegistry.STORE_BLOCK_TYPE.get(), StoreRenderer::new);
 	}
 	
 	private void onPlayerJoin(final PlayerEvent.PlayerLoggedInEvent event) {
@@ -117,8 +134,11 @@ public class ECon {
 				return;
 			}
 			
+			LOGGER.info("---");
 			BankAccountWorldSavedData.get((ServerWorld) event.getWorld());
+			LOGGER.info("~~~");
 			TransactionWorldSavedData.get((ServerWorld) event.getWorld());
+			LOGGER.info("===");
 		}
 	}
 	

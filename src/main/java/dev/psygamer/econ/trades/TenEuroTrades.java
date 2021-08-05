@@ -12,7 +12,7 @@ public class TenEuroTrades {
 		public GoldBlockTrade() {
 			super(
 					new ItemStack(Items.GOLD_BLOCK, 3),
-					new ItemStack(ItemRegistry.TEN_EUROS, 1),
+					new ItemStack(ItemRegistry.TEN_EUROS.get(), 1),
 					1, 3, 1.0f
 			);
 		}
@@ -23,7 +23,7 @@ public class TenEuroTrades {
 		public RedstoneTrade() {
 			super(
 					new ItemStack(Items.REDSTONE, 32),
-					new ItemStack(ItemRegistry.TEN_EUROS, 1),
+					new ItemStack(ItemRegistry.TEN_EUROS.get(), 1),
 					5, 3, 1.15f
 			);
 		}

@@ -1,8 +1,10 @@
+d29dc881f71cc650350f32689ff7bb0defd224e4 assets/econ/blockstates/store_block.json
 76b06d499ee9ba4443b1087047975d7bc0245513 assets/econ/models/item/fifty_euros.json
 94f8e5d927b5479f5d81d07665119c30ec0cf75d assets/econ/models/item/five_euros.json
 eb35911cfe9285e2a84493e1b7d5f9db05140436 assets/econ/models/item/five_hundert_euros.json
 83726d5424d0a0953f3f4b5096704fb6e426a4c1 assets/econ/models/item/one_euro.json
 71fc1ba20c79afe6d07d7acd8edcbde8db45431e assets/econ/models/item/one_hundert_euros.json
+15065161001b55bf5e6c6839752d17462cf0f7c1 assets/econ/models/item/store_block.json
 e546eee4ed8c62f8f4f800f1602f39046d8458cc assets/econ/models/item/ten_euros.json
 928f5cacdadd81966375cc5b4d303637488f21e0 assets/econ/models/item/twenty_euros.json
 e159057ca553d851f806a4fc98da74751f8c8893 assets/econ/models/item/two_hundert_euros.json

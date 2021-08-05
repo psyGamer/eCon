@@ -13,7 +13,7 @@ public class TwentyEuroTrades {
 			super(
 					new ItemStack(Items.VINE, 64),
 					new ItemStack(Items.VINE, 64),
-					new ItemStack(ItemRegistry.TWENTY_EUROS, 1),
+					new ItemStack(ItemRegistry.TWENTY_EUROS.get(), 1),
 					2, 4, 1.0f
 			);
 		}
@@ -24,7 +24,7 @@ public class TwentyEuroTrades {
 		public IronBlockTrade() {
 			super(
 					new ItemStack(Items.IRON_BLOCK, 2),
-					new ItemStack(ItemRegistry.TWENTY_EUROS, 1),
+					new ItemStack(ItemRegistry.TWENTY_EUROS.get(), 1),
 					2, 3, 1.1f
 			);
 		}

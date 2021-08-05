@@ -5,6 +5,8 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.banking.BankAccountHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
@@ -85,9 +87,16 @@ public class PlayerHead extends Widget {
 		nameCache.clear();
 		skinCache.clear();
 		
+		ECon.LOGGER.debug("UUIDs: " + playerUUIDs);
+		ECon.LOGGER.debug("BankAccounts: " + BankAccountHandler.bankAccountPlayerNames);
+		
 		for (final UUID playerUUID : playerUUIDs) {
+			ECon.LOGGER.debug("Caching name and skin of " + playerUUID);
+			
 			nameCache.put(playerUUID, getPlayerName(playerUUID));
 			skinCache.put(playerUUID, getSkinTexture(playerUUID));
+			
+			ECon.LOGGER.debug("Successfully cached Name: " + nameCache.get(playerUUID) + ", Skin: " + skinCache.get(playerUUID));
 		}
 	}
 	
@@ -115,6 +124,7 @@ public class PlayerHead extends Widget {
 				final String playerName = getPlayerName(playerUUID).get();
 				
 				final GameProfile profile = new GameProfile(playerUUID, playerName);
+				ECon.LOGGER.debug("Requesting skin of " + playerName + "[" + playerUUID + "]");
 				final PlayerProfile playerProfile = mojangAPI.getPlayerProfile(playerUUID.toString());
 				
 				final JSONObject json = new JSONObject();
@@ -168,9 +178,13 @@ public class PlayerHead extends Widget {
 					return fallbackSkinLocation;
 				}
 				
+				ECon.LOGGER.debug("Successfully requested skin of " + playerName + "[" + playerUUID + "]: " + skinLocationReference.get());
+				
 				return skinLocationReference.get();
 				
 			} catch (final RuntimeException | InterruptedException | ExecutionException ex) {
+				ECon.LOGGER.debug("Could not get skin of " + playerUUID);
+				
 				return fallbackSkinLocation;
 			}
 		});
@@ -205,6 +219,8 @@ public class PlayerHead extends Widget {
 						.getKey();
 				
 			} catch (final RuntimeException ex) {
+				ECon.LOGGER.debug("Could not get name history of " + playerUUID);
+				
 				return fallbackName;
 			}
 		});

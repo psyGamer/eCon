@@ -12,7 +12,7 @@ public class FiveHundertEuroTrades {
 		public NetheriteTrade() {
 			super(
 					new ItemStack(Items.NETHERITE_INGOT, 1),
-					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS, 1),
+					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS.get(), 1),
 					1, 25, 1.0f
 			);
 		}
@@ -23,7 +23,7 @@ public class FiveHundertEuroTrades {
 		public NetherstarTrade() {
 			super(
 					new ItemStack(Items.NETHER_STAR, 1),
-					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS, 2),
+					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS.get(), 2),
 					1, 30, 1.0f
 			);
 		}

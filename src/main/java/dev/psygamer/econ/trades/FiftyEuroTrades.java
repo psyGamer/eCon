@@ -12,7 +12,7 @@ public class FiftyEuroTrades {
 		public DiamondTrade() {
 			super(
 					new ItemStack(Items.DIAMOND, 2),
-					new ItemStack(ItemRegistry.FIFTY_EUROS, 1),
+					new ItemStack(ItemRegistry.FIFTY_EUROS.get(), 1),
 					2, 5, 1.1f
 			);
 		}
@@ -23,7 +23,7 @@ public class FiftyEuroTrades {
 		public EmeraldTrade() {
 			super(
 					new ItemStack(Items.EMERALD, 49),
-					new ItemStack(ItemRegistry.FIFTY_EUROS, 1),
+					new ItemStack(ItemRegistry.FIFTY_EUROS.get(), 1),
 					2, 4, 1.7f
 			);
 		}

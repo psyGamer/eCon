@@ -28,6 +28,8 @@ public class TransactionWorldSavedData extends WorldSavedData {
 			final long transferAmount = transactionCompound.getLong("amount");
 			final long timestamp = transactionCompound.getLong("time");
 			
+			ECon.LOGGER.info(sendingPlayerUUID + " -> " + receivingPlayerUUID + ": " + transferAmount + " | " + timestamp);
+			
 			TransactionHandler.registerTransaction(
 					new Transaction(sendingPlayerUUID, receivingPlayerUUID, transferAmount, timestamp)
 			);

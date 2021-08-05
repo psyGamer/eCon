@@ -2,6 +2,11 @@ package dev.psygamer.econ.setup;
 
 import dev.psygamer.econ.ECon;
 
+import dev.psygamer.econ.item.MoneyItem;
+import dev.psygamer.econ.item.TabRegistry;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 
 import net.minecraftforge.fml.RegistryObject;
@@ -13,16 +18,21 @@ public class ItemRegistry {
 	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ECon.MODID);
 	
+	/* Block Items */
+	
+	public static final RegistryObject<Item> STORE_BLOCK_ITEM = ITEMS.register("store_block",
+			() -> new BlockItem(BlockRegistry.STORE_BLOCK.get(), new Item.Properties().tab(TabRegistry.TAB_ECON)));
+	
 	/* Euros */
 	
-	public static final MoneyItem ONE_EURO = new MoneyItem("one_euro", 1);
-	public static final MoneyItem FIVE_EUROS = new MoneyItem("five_euros", 5);
-	public static final MoneyItem TEN_EUROS = new MoneyItem("ten_euros", 10);
-	public static final MoneyItem TWENTY_EUROS = new MoneyItem("twenty_euros", 20);
-	public static final MoneyItem FIFTY_EUROS = new MoneyItem("fifty_euros", 50);
-	public static final MoneyItem ONE_HUNDERT_EUROS = new MoneyItem("one_hundert_euros", 100);
-	public static final MoneyItem TWO_HUNDERT_EUROS = new MoneyItem("two_hundert_euros", 200);
-	public static final MoneyItem FIVE_HUNDERT_EUROS = new MoneyItem("five_hundert_euros", 500);
+	public static final RegistryObject<Item> ONE_EURO = ITEMS.register("one_euro", () -> new MoneyItem(1));
+	public static final RegistryObject<Item> FIVE_EUROS = ITEMS.register("five_euros", () -> new MoneyItem(5));
+	public static final RegistryObject<Item> TEN_EUROS = ITEMS.register("ten_euros", () -> new MoneyItem(10));
+	public static final RegistryObject<Item> TWENTY_EUROS = ITEMS.register("twenty_euros", () -> new MoneyItem(20));
+	public static final RegistryObject<Item> FIFTY_EUROS = ITEMS.register("fifty_euros", () -> new MoneyItem(50));
+	public static final RegistryObject<Item> ONE_HUNDERT_EUROS = ITEMS.register("one_hundert_euros", () -> new MoneyItem(100));
+	public static final RegistryObject<Item> TWO_HUNDERT_EUROS = ITEMS.register("two_hundert_euros", () -> new MoneyItem(200));
+	public static final RegistryObject<Item> FIVE_HUNDERT_EUROS = ITEMS.register("five_hundert_euros", () -> new MoneyItem(500));
 	
 	public static void register() {
 		ItemRegistry.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

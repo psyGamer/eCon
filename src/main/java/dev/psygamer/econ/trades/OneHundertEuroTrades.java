@@ -12,7 +12,7 @@ public class OneHundertEuroTrades {
 		public DiamondTrade() {
 			super(
 					new ItemStack(Items.DIAMOND, 4),
-					new ItemStack(ItemRegistry.ONE_HUNDERT_EUROS, 1),
+					new ItemStack(ItemRegistry.ONE_HUNDERT_EUROS.get(), 1),
 					4, 10, 1.2f
 			);
 		}
@@ -23,7 +23,7 @@ public class OneHundertEuroTrades {
 		public EmeraldBlockTrade() {
 			super(
 					new ItemStack(Items.EMERALD_BLOCK, 10),
-					new ItemStack(ItemRegistry.ONE_HUNDERT_EUROS, 1),
+					new ItemStack(ItemRegistry.ONE_HUNDERT_EUROS.get(), 1),
 					2, 10, 1.1f
 			);
 		}

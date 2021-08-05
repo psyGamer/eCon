@@ -5,6 +5,7 @@ import dev.psygamer.econ.ECon;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.DimensionSavedDataManager;
 import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.UUID;
@@ -27,8 +28,9 @@ public class BankAccountWorldSavedData extends WorldSavedData {
 			final UUID playerUUID = UUID.fromString(key);
 			final String playerName = accountCompound.getString("name");
 			
-			final int balance = accountCompound.getInt("amount");
+			final long balance = accountCompound.getLong("amount");
 			
+			ECon.LOGGER.info(playerUUID + "[" + playerName + "]: " + balance);
 			BankAccountHandler.registerBankAccount(playerUUID, playerName, balance);
 		}
 	}

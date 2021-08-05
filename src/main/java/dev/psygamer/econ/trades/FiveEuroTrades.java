@@ -13,7 +13,7 @@ public class FiveEuroTrades {
 			super(
 					new ItemStack(Items.IRON_HOE, 2),
 					new ItemStack(Items.LAPIS_LAZULI, 2),
-					new ItemStack(ItemRegistry.FIVE_EUROS, 1),
+					new ItemStack(ItemRegistry.FIVE_EUROS.get(), 1),
 					3, 3, 1.15f
 			);
 		}
@@ -24,7 +24,7 @@ public class FiveEuroTrades {
 		public LapislazuliTrades() {
 			super(
 					new ItemStack(Items.LAPIS_LAZULI, 32),
-					new ItemStack(ItemRegistry.FIVE_EUROS, 1),
+					new ItemStack(ItemRegistry.FIVE_EUROS.get(), 1),
 					8, 2, 1.25f
 			);
 		}

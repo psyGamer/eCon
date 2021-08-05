@@ -12,7 +12,7 @@ public class TwoHundertEuroTrades {
 		public NetheriteHoeTrade() {
 			super(
 					new ItemStack(Items.NETHERITE_HOE, 1),
-					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS, 1),
+					new ItemStack(ItemRegistry.FIVE_HUNDERT_EUROS.get(), 1),
 					1, 10, 1.0f
 			);
 		}
@@ -23,7 +23,7 @@ public class TwoHundertEuroTrades {
 		public DiamondBlockTrade() {
 			super(
 					new ItemStack(Items.DIAMOND_BLOCK, 1),
-					new ItemStack(ItemRegistry.TWO_HUNDERT_EUROS, 1),
+					new ItemStack(ItemRegistry.TWO_HUNDERT_EUROS.get(), 1),
 					3, 10, 1.1f
 			);
 		}
