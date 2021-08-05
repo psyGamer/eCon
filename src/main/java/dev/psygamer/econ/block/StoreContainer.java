@@ -68,6 +68,7 @@ public class StoreContainer extends Container {
 			return super.clicked(slotId, dragType, clickType, player);
 		}
 		
+		// Disable hot keying to avoid possible problems
 		if (dragType == -1 && clickType == ClickType.SWAP) {
 			return ItemStack.EMPTY;
 		}
@@ -75,7 +76,11 @@ public class StoreContainer extends Container {
 		if (clickType == ClickType.QUICK_MOVE) {
 			slot.set(ItemStack.EMPTY);
 		} else if (!player.inventory.getCarried().isEmpty()) {
-			slot.set(player.inventory.getCarried().copy());
+			if (player.inventory.getCarried().getItem() == slot.getItem().getItem() && (dragType == 1 || (dragType == 5 && clickType == ClickType.QUICK_CRAFT))) { // If same item & right click
+				((StoreFakeSlot) slot).increase(1);
+			} else {
+				slot.set(player.inventory.getCarried().copy());
+			}
 		} else if (player.inventory.getCarried().isEmpty()) {
 			slot.set(ItemStack.EMPTY);
 		} else if (slot.mayPlace(player.inventory.getCarried())) {

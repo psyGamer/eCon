@@ -27,7 +27,19 @@ public class StoreFakeSlot extends SlotItemHandler {
 			stack = stack.copy();
 		}
 		
+		stack.setCount(
+				MathHelper.clamp(stack.getCount(), 1, stack.getMaxStackSize())
+		);
+		
 		super.set(stack);
+	}
+	
+	public void increase(final int amount) {
+		final ItemStack stack = getItem().copy();
+		
+		stack.setCount(stack.getCount() + amount);
+		
+		set(stack);
 	}
 	
 	@Override

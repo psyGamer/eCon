@@ -60,7 +60,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		renderItem(
 				matrix, tileEntity.getItem(), renderBuffer,
 				
-				new Vector3f(0.5f + unitOffset.x / 20f, 0.3f + this.yTranslation, 0.5f + unitOffset.y / 20f),
+				new Vector3f(0.5f + unitOffset.x / 20f, 0.25f + this.yTranslation, 0.5f + unitOffset.y / 20f),
 				Vector3f.YP.rotation(this.rotation), 1.0f,
 				
 				partialTicks, combinedLight, lightLevel
@@ -69,7 +69,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		renderPriceLabel(matrix, renderBuffer, 99999,
 				facingDirection, lightLevel, 0x2B303D
 		);
-		renderStockLabel(matrix, renderBuffer, 64,
+		renderStockLabel(matrix, renderBuffer, tileEntity.getItem().getCount(),
 				facingDirection, lightLevel, 0xDCDCDC
 		);
 	}
@@ -205,6 +205,10 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		// cos(22.5°) * h = 0.9238795325112867 * h
 		matrixStack.translate(9, -1, 3.5);
 		matrixStack.translate(-1.1, font.lineHeight - 2 - 0.9238795325112867f * 2.1f, 2.1f / 2f);
+		
+		if (stockLeft < 10) {
+			matrixStack.translate(0.6f, 0, 0);
+		}
 		
 		matrixStack.mulPose(
 				Vector3f.XP.rotationDegrees(rotation.x())
