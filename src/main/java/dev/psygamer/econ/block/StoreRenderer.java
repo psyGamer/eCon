@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3d;
@@ -38,6 +39,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		super(dispatcher);
 	}
 	
+	
 	@Override
 	public void render(final StoreTileEntity tileEntity, final float partialTicks,
 					   final MatrixStack matrix, final IRenderTypeBuffer renderBuffer,
@@ -52,7 +54,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		final int lightLevel = getLightLevel(tileEntity.getLevel(), tileEntity.getBlockPos());
 		final Vector2f unitOffset = getUnitOffset(facingDirection);
 		
-		this.rotation = (this.rotation + (this.rotationSpeed * partialTicks)) % 360;
+		this.rotation = MathHelper.lerp(partialTicks, tileEntity.getItemRotation(), tileEntity.getPrevItemRotation());
 		this.yTranslation = (float) (Math.sin(Math.toRadians(this.rotation * 110)) * 0.05 + 0.05);
 		
 		renderItem(
@@ -104,19 +106,19 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		
 		switch (facingDirection) {
 			case WEST:
-				translation = new Vector3f(-1, 1, 2.5f);
+				translation = new Vector3f(-1, 1, 1.5f);
 				rotation = new Vector3f(-22.5f, 270, 0);
 				break;
 			case SOUTH:
-				translation = new Vector3f(-1.5f, 1, 14.75f);
-				rotation = new Vector3f(22.5f, 180, 0);
+				translation = new Vector3f(-1.5f, 1, 15f);
+				rotation = new Vector3f(-22.5f, 180, 0);
 				break;
 			case EAST:
-				translation = new Vector3f(-14.5f, 1, 14.5f);
-				rotation = new Vector3f(0, 90, 22.5f);
+				translation = new Vector3f(-15f, 1, 14.5f);
+				rotation = new Vector3f(-22.5f, 90, 0);
 				break;
 			default:
-				translation = new Vector3f(-14.5f, 1, 1.25f);
+				translation = new Vector3f(-14.5f, 1, 1f);
 				rotation = new Vector3f(-22.5f, 0, 0);
 				break;
 		}
@@ -136,7 +138,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		
 		// cos(22.5°) * h = 0.9238795325112867 * h
 		
-		matrixStack.translate(0.5f, font.lineHeight - 2.11f - 0.9238795325112867f * 2.3f, 2.3f / 2f);
+		matrixStack.translate(1.5f, font.lineHeight - 2.11f - 0.9238795325112867f * 2.3f, 2.3f / 2f);
 		
 		
 		matrixStack.mulPose(
@@ -170,19 +172,19 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		
 		switch (facingDirection) {
 			case WEST:
-				translation = new Vector3f(-1, 1, 2.5f);
+				translation = new Vector3f(-1, 1, 1.5f);
 				rotation = new Vector3f(-22.5f, 270, 0);
 				break;
 			case SOUTH:
-				translation = new Vector3f(-1.5f, 1, 14.75f);
-				rotation = new Vector3f(22.5f, 180, 0);
+				translation = new Vector3f(-1.5f, 1, 15f);
+				rotation = new Vector3f(-22.5f, 180, 0);
 				break;
 			case EAST:
-				translation = new Vector3f(-14.5f, 1, 14.5f);
-				rotation = new Vector3f(0, 90, 22.5f);
+				translation = new Vector3f(-15f, 1, 14.5f);
+				rotation = new Vector3f(-22.5f, 90, 0);
 				break;
 			default:
-				translation = new Vector3f(-14.5f, 1, 1.25f);
+				translation = new Vector3f(-14.5f, 1, 1f);
 				rotation = new Vector3f(-22.5f, 0, 0);
 				break;
 		}
@@ -202,7 +204,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		
 		// cos(22.5°) * h = 0.9238795325112867 * h
 		matrixStack.translate(9, -1, 3.5);
-		matrixStack.translate(-2.1, font.lineHeight - 2 - 0.9238795325112867f * 2.1f, 2.1f / 2f);
+		matrixStack.translate(-1.1, font.lineHeight - 2 - 0.9238795325112867f * 2.1f, 2.1f / 2f);
 		
 		matrixStack.mulPose(
 				Vector3f.XP.rotationDegrees(rotation.x())
@@ -235,11 +237,11 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 			case WEST:
 				return Vector2f.UNIT_X;
 			case SOUTH:
-				return Vector2f.UNIT_Y;
+				return Vector2f.NEG_UNIT_Y;
 			case EAST:
 				return Vector2f.NEG_UNIT_X;
 			default:
-				return Vector2f.NEG_UNIT_Y;
+				return Vector2f.UNIT_Y;
 		}
 	}
 }

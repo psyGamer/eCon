@@ -13,6 +13,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import net.minecraft.util.NonNullList;
@@ -20,11 +21,13 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.common.util.LazyOptional;
 
-public class StoreTileEntity extends TileEntity implements IInventory, INamedContainerProvider {
+public class StoreTileEntity extends TileEntity implements IInventory, ITickableTileEntity, INamedContainerProvider {
 	
 	public static final int SLOTS = 1;
+	
+	private float itemRotation = 0f;
+	private float prevItemRotation = 0f;
 	
 	private final IItemHandler previewHandler = new ItemStackHandler(SLOTS);
 	private final NonNullList<ItemStack> offeredItem = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -41,6 +44,19 @@ public class StoreTileEntity extends TileEntity implements IInventory, INamedCon
 		super(TileEntityTypeRegistry.STORE_BLOCK_TYPE.get());
 	}
 	
+	public float getItemRotation() {
+		return this.itemRotation;
+	}
+	
+	public float getPrevItemRotation() {
+		return this.prevItemRotation;
+	}
+	
+	@Override
+	public void tick() {
+		this.prevItemRotation = this.itemRotation;
+		this.itemRotation = (this.itemRotation + 0.03f) % 360;
+	}
 	
 	@Override
 	public int getContainerSize() {
