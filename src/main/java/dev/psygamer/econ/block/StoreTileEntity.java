@@ -13,6 +13,8 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -22,12 +24,19 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nullable;
+import java.util.UUID;
+
 public class StoreTileEntity extends TileEntity implements IInventory, ITickableTileEntity, INamedContainerProvider {
 	
 	public static final int SLOTS = 1;
 	
 	private float itemRotation = 0f;
 	private float prevItemRotation = 0f;
+	
+	private String name;
+	private UUID owner;
+	private int price;
 	
 	private final IItemHandler previewHandler = new ItemStackHandler(SLOTS);
 	private final NonNullList<ItemStack> offeredItem = NonNullList.withSize(1, ItemStack.EMPTY);
@@ -42,14 +51,6 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	
 	public StoreTileEntity() {
 		super(TileEntityTypeRegistry.STORE_BLOCK_TYPE.get());
-	}
-	
-	public float getItemRotation() {
-		return this.itemRotation;
-	}
-	
-	public float getPrevItemRotation() {
-		return this.prevItemRotation;
 	}
 	
 	@Override
@@ -131,12 +132,18 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	public void load(final BlockState state, final CompoundNBT compound) {
 		super.load(state, compound);
 		
+		setName(compound.getString("name"));
+		setPrice(compound.getInt("price"));
+		
 		ItemStackHelper.loadAllItems(compound, this.offeredItem);
 	}
 	
 	@Override
 	public CompoundNBT save(final CompoundNBT compound) {
 		super.save(compound);
+		
+		compound.putString("name", getName());
+		compound.putInt("price", getPrice());
 		
 		return ItemStackHelper.saveAllItems(compound, this.offeredItem);
 	}
@@ -160,4 +167,48 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
 		load(state, tag);
 	}
+	
+	public String getName() {
+		return this.name == null ? "" : this.name;
+	}
+	
+	@Nullable
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		return new SUpdateTileEntityPacket(getBlockPos(), -1, save(new CompoundNBT()));
+	}
+	
+	@Override
+	public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+		load(null, pkt.getTag());
+	}
+	
+	public void setName(final String name) {
+		this.name = name;
+	}
+	
+	public int getPrice() {
+		return this.price;
+	}
+	
+	public void setPrice(final int price) {
+		this.price = price;
+	}
+	
+	public UUID getOwner() {
+		return this.owner;
+	}
+	
+	public void setOwner(final UUID owner) {
+		this.owner = owner;
+	}
+	
+	public float getItemRotation() {
+		return this.itemRotation;
+	}
+	
+	public float getPrevItemRotation() {
+		return this.prevItemRotation;
+	}
+	
 }

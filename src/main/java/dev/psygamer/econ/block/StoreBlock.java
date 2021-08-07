@@ -3,6 +3,7 @@ package dev.psygamer.econ.block;
 import com.google.common.collect.Lists;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -72,6 +73,17 @@ public class StoreBlock extends HorizontalBlock {
 	@Override
 	public BlockState getStateForPlacement(final BlockItemUseContext context) {
 		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	}
+	
+	@Override
+	public void setPlacedBy(final World world, final BlockPos pos, final BlockState state, final LivingEntity placer, final ItemStack heldItem) {
+		if (world.isLoaded(pos)) {
+			final TileEntity tileEntity = world.getBlockEntity(pos);
+			
+			if (tileEntity instanceof StoreTileEntity) {
+				((StoreTileEntity) tileEntity).setOwner(placer.getUUID());
+			}
+		}
 	}
 	
 	@Override

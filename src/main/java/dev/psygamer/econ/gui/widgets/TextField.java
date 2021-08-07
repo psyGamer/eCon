@@ -42,14 +42,18 @@ public class TextField extends TextFieldWidget {
 	
 	private final FontRenderer font;
 	
+	private final float offsetRight, offsetTop;
+	
 	private static final int TEXT_COLOR = Color.parseColor("#E0E0E0").getValue();
 	private static final int TEXT_COLOR_INVALID_ = Color.parseColor("#FF5555").getValue();
 	private static final int TEXT_COLOR_SUGGESTION = Color.parseColor("#808080").getValue();
 	
-	public TextField(final FontRenderer fontRenderer, final int x, final int y, final int width, final int height) {
+	public TextField(final FontRenderer fontRenderer, final int x, final int y, final int width, final int height, final float offsetRight, final float offsetTop) {
 		super(fontRenderer, x, y, width, height, StringTextComponent.EMPTY);
 		
 		this.font = fontRenderer;
+		this.offsetRight = offsetRight;
+		this.offsetTop = offsetTop;
 	}
 	
 	private void completeSuggestion() {
@@ -67,16 +71,22 @@ public class TextField extends TextFieldWidget {
 	public void render(final MatrixStack matrix, final int mouseX, final int mouseY, final float partialTicks) {
 		renderBg(matrix, Minecraft.getInstance(), mouseX, mouseY);
 		
-		final int highlightedFrom = Math.min(getCursorPosition(), this.highlightedPos);
-		final int highlightedTo = Math.max(getCursorPosition(), this.highlightedPos);
+		final int
+				highlightedFrom = Math.min(getCursorPosition(), this.highlightedPos),
+				highlightedTo = Math.max(getCursorPosition(), this.highlightedPos);
 		
-		final boolean shouldDrawCursor = this.isFocused() && this.currentFrame / 6 % 2 == 0;
-		final boolean shouldDrawVerticalCursor = getCursorPosition() < getValue().length() || getValue().length() >= this.maxTextLength;
+		final float
+				xPos = this.x + this.offsetRight,
+				yPos = this.y + this.offsetTop;
+		
+		final boolean
+				shouldDrawCursor = this.isFocused() && this.currentFrame / 6 % 2 == 0,
+				shouldDrawVerticalCursor = getCursorPosition() < getValue().length() || getValue().length() >= this.maxTextLength;
 		
 		if (this.suggestion != null && isFocused()) {
 			try {
 				this.font.drawShadow(matrix, this.suggestion.substring(getValue().length()),
-						this.x + this.font.width(getValue()) + 5, this.y + this.height - this.font.lineHeight - 3,
+						xPos + this.font.width(getValue()), yPos,
 						
 						TEXT_COLOR_SUGGESTION
 				);
@@ -86,27 +96,29 @@ public class TextField extends TextFieldWidget {
 		}
 		
 		this.font.drawShadow(matrix, getValue(),
-				this.x + 5, this.y + this.height - this.font.lineHeight - 3,
+				xPos, yPos,
 				
 				this.isValid ? TEXT_COLOR : TEXT_COLOR_INVALID_
 		);
 		
-		renderHighlight(
-				this.x + 5 + this.font.width(getValue().substring(0, highlightedTo)), this.y + this.height - 13,
-				this.x + 5 + this.font.width(getValue().substring(0, highlightedFrom)), this.y + this.height - 2
-		);
+		if (highlightedFrom != highlightedTo) {
+			renderHighlight(
+					(int) Math.ceil(xPos + this.font.width(getValue().substring(0, highlightedTo))), (int) yPos + this.font.lineHeight + 1,
+					(int) Math.floor(xPos + this.font.width(getValue().substring(0, highlightedFrom))), (int) yPos - 1
+			);
+		}
 		
 		if (shouldDrawCursor) {
 			if (shouldDrawVerticalCursor) {
 				AbstractGui.fill(matrix,
-						this.x + 5 + this.font.width(getValue().substring(0, getCursorPosition())), this.y + this.height - 2,
-						this.x + 5 + this.font.width(getValue().substring(0, getCursorPosition())) + 1, this.y + this.height - 13,
+						(int) xPos + this.font.width(getValue().substring(0, getCursorPosition())), (int) yPos - 1,
+						(int) xPos + this.font.width(getValue().substring(0, getCursorPosition())) + 1, (int) yPos + this.font.lineHeight + 1,
 						
 						TEXT_COLOR + 0xFF000000
 				);
 			} else {
 				this.font.drawShadow(matrix, "_",
-						this.x + 5 + this.font.width(getValue()), this.y + this.height - this.font.lineHeight - 3,
+						xPos + this.font.width(getValue()), yPos,
 						
 						TEXT_COLOR
 				);
@@ -114,6 +126,7 @@ public class TextField extends TextFieldWidget {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void renderHighlight(int topRightX, int topRightY, int bottomLeftX, int bottomLeftY) {
 		if (topRightX < bottomLeftX) {
 			final int i = topRightX;
@@ -142,10 +155,10 @@ public class TextField extends TextFieldWidget {
 		RenderSystem.enableColorLogicOp();
 		RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
-		bufferbuilder.vertex((double) topRightX, (double) bottomLeftY, 0.0D).endVertex();
-		bufferbuilder.vertex((double) bottomLeftX, (double) bottomLeftY, 0.0D).endVertex();
-		bufferbuilder.vertex((double) bottomLeftX, (double) topRightY, 0.0D).endVertex();
-		bufferbuilder.vertex((double) topRightX, (double) topRightY, 0.0D).endVertex();
+		bufferbuilder.vertex(topRightX, bottomLeftY, 0.0D).endVertex();
+		bufferbuilder.vertex(bottomLeftX, bottomLeftY, 0.0D).endVertex();
+		bufferbuilder.vertex(bottomLeftX, topRightY, 0.0D).endVertex();
+		bufferbuilder.vertex(topRightX, topRightY, 0.0D).endVertex();
 		tessellator.end();
 		RenderSystem.disableColorLogicOp();
 		RenderSystem.enableTexture();
@@ -178,7 +191,8 @@ public class TextField extends TextFieldWidget {
 	
 	@Override
 	public void setFocus(final boolean focus) {
-		currentlyFocused = this;
+		if (focus)
+			currentlyFocused = this;
 		
 		super.setFocus(focus);
 	}

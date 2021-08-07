@@ -6,6 +6,7 @@ import dev.psygamer.econ.network.client.BankAccountMessage;
 import dev.psygamer.econ.network.client.NewTransactionMessage;
 import dev.psygamer.econ.network.client.RegisteredBankAccountsMessage;
 import dev.psygamer.econ.network.client.TransactionHistoryMessage;
+import dev.psygamer.econ.network.server.StoreOwnerMessage;
 import dev.psygamer.econ.network.server.TransactionMessage;
 import net.minecraft.util.ResourceLocation;
 
@@ -37,5 +38,6 @@ public class EConPacketHandler {
 		/* Client -> Server */
 		
 		INSTANCE.registerMessage(channelID++, TransactionMessage.class, TransactionMessage::encode, TransactionMessage::decode, TransactionMessage::handle);
+		INSTANCE.registerMessage(channelID++, StoreOwnerMessage.class, StoreOwnerMessage::encode, StoreOwnerMessage::new, StoreOwnerMessage::handle);
 	}
 }

@@ -1,10 +1,9 @@
 package dev.psygamer.econ.block;
 
+import dev.psygamer.econ.network.EConPacketHandler;
+import dev.psygamer.econ.network.server.StoreOwnerMessage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Slot;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.IItemHandler;

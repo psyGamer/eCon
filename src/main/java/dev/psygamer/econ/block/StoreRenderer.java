@@ -66,7 +66,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 				partialTicks, combinedLight, lightLevel
 		);
 		
-		renderPriceLabel(matrix, renderBuffer, 99999,
+		renderPriceLabel(matrix, renderBuffer, tileEntity.getPrice(),
 				facingDirection, lightLevel, 0x2B303D
 		);
 		renderStockLabel(matrix, renderBuffer, tileEntity.getItem().getCount(),
