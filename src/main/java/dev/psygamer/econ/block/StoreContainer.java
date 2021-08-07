@@ -4,6 +4,7 @@ import dev.psygamer.econ.setup.ContainerRegistry;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ public class StoreContainer extends Container {
 	
 	private StoreOwnerScreen ownerScreen;
 	
+	private final PlayerInventory playerInventory;
 	private final StoreTileEntity tileEntity;
 	private final IWorldPosCallable canInteractWithCallable;
 	
@@ -29,12 +31,13 @@ public class StoreContainer extends Container {
 	
 	public StoreContainer(final int windowId, final PlayerInventory playerInventory, final StoreTileEntity tileEntity) {
 		super(ContainerRegistry.STORE_BLOCK_CONTAINER.get(), windowId);
-		
+//		playerInventory.player.openMenu(new ChestContainer())
+		this.playerInventory = playerInventory;
 		this.tileEntity = tileEntity;
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
-		this.fakeSlot = new StoreFakeSlot(this, tileEntity.getPreviewHandler(), 0, 118, 69);
+		this.fakeSlot = new StoreFakeSlot(this, tileEntity.getOfferedItemHandler(), 0, 118, 69);
 		
-		this.fakeSlot.set(tileEntity.getOfferedItem().get(0));
+		this.fakeSlot.set(tileEntity.getOfferedItem());
 		
 		for (int row = 0 ; row < 3 ; row++) {
 			for (int col = 0 ; col < 9 ; col++) {
@@ -54,12 +57,22 @@ public class StoreContainer extends Container {
 			));
 		}
 		
+		for (int row = 0 ; row < 3 ; row++) {
+			for (int col = 0 ; col < 9 ; col++) {
+				this.addSlot(new StoreStorageSlot(tileEntity,
+						row * 9 + col + 1,
+						8 + col * 18,
+						31 + row * 18
+				));
+			}
+		}
+		
 		this.addSlot(this.fakeSlot);
 	}
 	
 	public void setChanged() {
 		this.tileEntity.setChanged();
-		this.tileEntity.getOfferedItem().set(0, this.fakeSlot.getItem());
+		this.tileEntity.setOfferedItem(this.fakeSlot.getItem());
 	}
 	
 	@Override
@@ -141,6 +154,10 @@ public class StoreContainer extends Container {
 		}
 		
 		return ItemStack.EMPTY;
+	}
+	
+	public PlayerInventory getPlayerInventory() {
+		return this.playerInventory;
 	}
 	
 	public StoreOwnerScreen getOwnerScreen() {

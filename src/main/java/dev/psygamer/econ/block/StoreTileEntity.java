@@ -29,7 +29,7 @@ import java.util.UUID;
 
 public class StoreTileEntity extends TileEntity implements IInventory, ITickableTileEntity, INamedContainerProvider {
 	
-	public static final int SLOTS = 1;
+	public static final int SLOTS = 37;
 	
 	private float itemRotation = 0f;
 	private float prevItemRotation = 0f;
@@ -38,15 +38,11 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	private UUID owner;
 	private int price;
 	
-	private final IItemHandler previewHandler = new ItemStackHandler(SLOTS);
-	private final NonNullList<ItemStack> offeredItem = NonNullList.withSize(1, ItemStack.EMPTY);
+	private final IItemHandler offeredItemHandler = new ItemStackHandler(1);
+	private final NonNullList<ItemStack> items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
 	
-	public NonNullList<ItemStack> getOfferedItem() {
-		return this.offeredItem;
-	}
-	
-	public IItemHandler getPreviewHandler() {
-		return this.previewHandler;
+	public IItemHandler getOfferedItemHandler() {
+		return this.offeredItemHandler;
 	}
 	
 	public StoreTileEntity() {
@@ -60,27 +56,8 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	}
 	
 	@Override
-	public int getContainerSize() {
-		return SLOTS;
-	}
-	
-	@Override
-	public boolean isEmpty() {
-		return this.offeredItem.isEmpty();
-	}
-	
-	public ItemStack getItem() {
-		return getItem(0);
-	}
-	
-	@Override
-	public ItemStack getItem(final int slot) {
-		return this.offeredItem.get(slot);
-	}
-	
-	@Override
 	public ItemStack removeItem(final int slot, final int amount) {
-		final ItemStack itemCopy = ItemStackHelper.removeItem(this.offeredItem, slot, amount);
+		final ItemStack itemCopy = ItemStackHelper.removeItem(this.items, slot, amount);
 		
 		if (!itemCopy.isEmpty()) {
 			this.setChanged();
@@ -91,12 +68,13 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	
 	@Override
 	public ItemStack removeItemNoUpdate(final int slot) {
-		return ItemStackHelper.takeItem(Lists.newArrayList(this.offeredItem), slot);
+		return ItemStackHelper.takeItem(Lists.newArrayList(this.items), slot);
 	}
 	
 	@Override
 	public void setItem(final int slot, final ItemStack itemStack) {
-		this.offeredItem.set(slot, itemStack);
+		this.items.set(slot, itemStack);
+		
 		if (itemStack.getCount() > this.getMaxStackSize()) {
 			itemStack.setCount(this.getMaxStackSize());
 		}
@@ -125,7 +103,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	
 	@Override
 	public void clearContent() {
-		this.offeredItem.clear();
+		this.items.clear();
 	}
 	
 	@Override
@@ -135,7 +113,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		setName(compound.getString("name"));
 		setPrice(compound.getInt("price"));
 		
-		ItemStackHelper.loadAllItems(compound, this.offeredItem);
+		ItemStackHelper.loadAllItems(compound, this.items);
 	}
 	
 	@Override
@@ -144,8 +122,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		
 		compound.putString("name", getName());
 		compound.putInt("price", getPrice());
-		
-		return ItemStackHelper.saveAllItems(compound, this.offeredItem);
+		return ItemStackHelper.saveAllItems(compound, this.items);
 	}
 	
 	@Override
@@ -168,10 +145,6 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		load(state, tag);
 	}
 	
-	public String getName() {
-		return this.name == null ? "" : this.name;
-	}
-	
 	@Nullable
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
@@ -181,6 +154,33 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	@Override
 	public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
 		load(null, pkt.getTag());
+	}
+	
+	@Override
+	public int getContainerSize() {
+		return SLOTS;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return this.items.isEmpty();
+	}
+	
+	@Override
+	public ItemStack getItem(final int slot) {
+		return this.items.get(slot);
+	}
+	
+	public ItemStack getOfferedItem() {
+		return getItem(0);
+	}
+	
+	public void setOfferedItem(final ItemStack offeredItem) {
+		setItem(0, offeredItem);
+	}
+	
+	public String getName() {
+		return this.name == null ? "" : this.name;
 	}
 	
 	public void setName(final String name) {

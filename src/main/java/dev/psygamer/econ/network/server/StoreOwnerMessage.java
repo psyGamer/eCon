@@ -23,7 +23,7 @@ public class StoreOwnerMessage {
 	public StoreOwnerMessage(final StoreTileEntity tileEntity) {
 		this.itemPrice = tileEntity.getPrice();
 		this.itemName = tileEntity.getName();
-		this.offeredItem = tileEntity.getItem().copy();
+		this.offeredItem = tileEntity.getOfferedItem().copy();
 		
 		this.tileEntityPos = tileEntity.getBlockPos();
 	}
@@ -54,28 +54,31 @@ public class StoreOwnerMessage {
 	}
 	
 	public void handle(final Supplier<NetworkEvent.Context> context) {
-		final ServerPlayerEntity serverPlayer = context.get().getSender();
-		final ServerWorld serverWorld = serverPlayer.getLevel();
-		
-		if (!serverWorld.isLoaded(this.tileEntityPos) ||
-				serverPlayer.distanceToSqr(
-						this.tileEntityPos.getX(),
-						this.tileEntityPos.getY(),
-						this.tileEntityPos.getZ()
-				) > 9 * 9) return;
-		
-		final TileEntity tileEntity = serverPlayer.getLevel().getBlockEntity(this.tileEntityPos);
-		
-		if (tileEntity instanceof StoreTileEntity) {
-			final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+		context.get().enqueueWork(() -> {
+			final ServerPlayerEntity serverPlayer = context.get().getSender();
+			final ServerWorld serverWorld = serverPlayer.getLevel();
 			
-			if (!serverPlayer.getUUID().equals(storeTileEntity.getOwner())) return;
+			if (!serverWorld.isLoaded(this.tileEntityPos) ||
+					serverPlayer.distanceToSqr(
+							this.tileEntityPos.getX(),
+							this.tileEntityPos.getY(),
+							this.tileEntityPos.getZ()
+					) > 9 * 9) return;
 			
-			storeTileEntity.setName(this.itemName);
-			storeTileEntity.setPrice(this.itemPrice);
-			storeTileEntity.setItem(0, this.offeredItem);
+			final TileEntity tileEntity = serverPlayer.getLevel().getBlockEntity(this.tileEntityPos);
 			
-			storeTileEntity.setChanged();
-		}
+			if (tileEntity instanceof StoreTileEntity) {
+				final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+				
+				if (!serverPlayer.getUUID().equals(storeTileEntity.getOwner())) return;
+				
+				storeTileEntity.setName(this.itemName);
+				storeTileEntity.setPrice(this.itemPrice);
+				storeTileEntity.setItem(0, this.offeredItem);
+				
+				storeTileEntity.setChanged();
+			}
+		});
+		context.get().setPacketHandled(true);
 	}
 }

@@ -1,6 +1,5 @@
 package dev.psygamer.econ.block;
 
-import com.mojang.datafixers.util.Pair;
 import dev.psygamer.econ.ECon;
 
 import dev.psygamer.econ.gui.widgets.ImageButton;
@@ -11,11 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.StoreOwnerMessage;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
@@ -68,6 +63,17 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 	protected void init() {
 		final int xPos = this.width / 2 - this.imageWidth / 2;
 		final int yPos = this.height / 2 - this.imageHeight / 2;
+		final float ntBtnScale = 1.0f;
+		
+		this.storageButton = new net.minecraft.client.gui.widget.button.ImageButton(
+				xPos + this.imageWidth - 27, yPos + 5,
+				(int) (22 * ntBtnScale), (int) (22 * ntBtnScale),
+				210, 0, (int) (22 * ntBtnScale),
+				
+				STORE_LOCATION, (int) (256 * ntBtnScale), (int) (256 * ntBtnScale),
+				
+				onPress -> this.minecraft.setScreen(new StoreStorageScreen(this.menu, this.menu.getPlayerInventory(), StringTextComponent.EMPTY))
+		);
 		
 		this.nameField = new TextField(this.font, xPos + 22, yPos + 37, 134, 15, 5, 3);
 		this.priceField = new TextField(this.font, xPos + 27, yPos + 79, 45, 15, 5, 3);
@@ -80,8 +86,8 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		this.nameField.setValue(this.tileEntity.getName());
 		if (this.tileEntity.getPrice() > 0)
 			this.priceField.setValue(String.valueOf(this.tileEntity.getPrice()));
-		if (this.tileEntity.getItem().getCount() > 0)
-			this.quantityField.setValue(String.valueOf(this.tileEntity.getItem().getCount()));
+		if (this.tileEntity.getOfferedItem().getCount() > 0)
+			this.quantityField.setValue(String.valueOf(this.tileEntity.getOfferedItem().getCount()));
 		
 		this.nameField.setValid(true);
 		this.priceField.setValid(true);
@@ -115,11 +121,11 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		
 		this.tileEntity.setName(this.nameField.getValue());
 		this.tileEntity.setPrice(parseInt(this.priceField.getValue()));
-		this.tileEntity.getItem().setCount(
+		this.tileEntity.getOfferedItem().setCount(
 				MathHelper.clamp(parseInt(this.quantityField.getValue()), 1, 64)
 		);
 		
-		this.increaseQuantityButton.active = parseInt(this.quantityField.getValue()) < this.tileEntity.getItem().getMaxStackSize() && parseInt(this.quantityField.getValue()) > 0;
+		this.increaseQuantityButton.active = parseInt(this.quantityField.getValue()) < this.tileEntity.getOfferedItem().getMaxStackSize() && parseInt(this.quantityField.getValue()) > 0;
 		this.decreaseQuantityButton.active = parseInt(this.quantityField.getValue()) > 1;
 		
 		this.tick = ++this.tick % 20;
@@ -173,10 +179,12 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 //		super.render(matrix, mouseX, mouseY, partialTicks);
 		renderTooltip(matrix, mouseX, mouseY);
 		
+		this.storageButton.render(matrix, mouseX, mouseY, partialTicks);
+		
 		this.font.draw(matrix, "Store",
 				this.width / 2f - (this.font.width("Store") / 2f), this.height / 2f - this.imageHeight / 2f + 7,
 				
-				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()
+				0x404040
 		);
 		
 		this.font.draw(matrix, new StringTextComponent("Name"),
@@ -203,11 +211,11 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		this.font.draw(matrix, this.inventory.getDisplayName(),
 				this.inventoryLabelX, this.inventoryLabelY,
 				
-				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()
+				0x404040
 		);
 	}
 	
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	private void renderSlots(final MatrixStack matrix, final int mouseX, final int mouseY, final float partialTicks) {
 		this.renderBg(matrix, partialTicks, mouseX, mouseY);
 		
@@ -224,6 +232,8 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		
 		for (final Slot slot : this.menu.slots) {
+			if (slot instanceof StoreStorageSlot) continue;
+			
 			final float scale = slot instanceof StoreFakeSlot ? 2.0f : 1.0f;
 			
 			RenderSystem.pushMatrix();
@@ -404,6 +414,8 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 	public void mouseMoved(final double mouseX, final double mouseY) {
 		this.increaseQuantityButton.mouseMoved(mouseX, mouseY);
 		this.decreaseQuantityButton.mouseMoved(mouseX, mouseY);
+		
+		this.storageButton.mouseMoved(mouseX, mouseY);
 	}
 	
 	@Override
@@ -414,6 +426,8 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		
 		this.increaseQuantityButton.mouseClicked(mouseX, mouseY, buttonId);
 		this.decreaseQuantityButton.mouseClicked(mouseX, mouseY, buttonId);
+		
+		this.storageButton.mouseClicked(mouseX, mouseY, buttonId);
 		
 		final int slotX = this.width / 2 - this.imageWidth / 2 + this.menu.getFakeSlot().x;
 		final int slotY = this.height / 2 - this.imageHeight / 2 + this.menu.getFakeSlot().y;
@@ -450,7 +464,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 			this.priceField.charTyped(typedChar, keyCode);
 			
 			if (parseInt(this.quantityField.getValue() + typedChar) >= 1 &&
-					parseInt(this.quantityField.getValue() + typedChar) <= this.tileEntity.getItem().getMaxStackSize()
+					parseInt(this.quantityField.getValue() + typedChar) <= this.tileEntity.getOfferedItem().getMaxStackSize()
 			) {
 				this.quantityField.charTyped(typedChar, keyCode);
 				updateItemStack();

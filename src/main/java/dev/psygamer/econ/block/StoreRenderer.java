@@ -1,7 +1,6 @@
 package dev.psygamer.econ.block;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -17,11 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
@@ -45,7 +41,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 					   final MatrixStack matrix, final IRenderTypeBuffer renderBuffer,
 					   final int combinedLight, final int combinedOverlay
 	) {
-		if (tileEntity.getItem() == ItemStack.EMPTY || tileEntity.getItem().getItem() == Items.AIR) {
+		if (tileEntity.getOfferedItem() == ItemStack.EMPTY || tileEntity.getOfferedItem().getItem() == Items.AIR) {
 			return;
 		}
 		
@@ -58,7 +54,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		this.yTranslation = (float) (Math.sin(Math.toRadians(this.rotation * 110)) * 0.05 + 0.05);
 		
 		renderItem(
-				matrix, tileEntity.getItem(), renderBuffer,
+				matrix, tileEntity.getOfferedItem(), renderBuffer,
 				
 				new Vector3f(0.5f + unitOffset.x / 20f, 0.25f + this.yTranslation, 0.5f + unitOffset.y / 20f),
 				Vector3f.YP.rotation(this.rotation), 1.0f,
@@ -69,7 +65,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		renderPriceLabel(matrix, renderBuffer, tileEntity.getPrice(),
 				facingDirection, lightLevel, 0x2B303D
 		);
-		renderStockLabel(matrix, renderBuffer, tileEntity.getItem().getCount(),
+		renderStockLabel(matrix, renderBuffer, tileEntity.getOfferedItem().getCount(),
 				facingDirection, lightLevel, 0xDCDCDC
 		);
 	}

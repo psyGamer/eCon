@@ -2,6 +2,7 @@ package dev.psygamer.econ.setup;
 
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.block.StoreContainer;
+import dev.psygamer.econ.block.StoreStorageContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
@@ -15,6 +16,9 @@ public class ContainerRegistry {
 	
 	public static final RegistryObject<ContainerType<StoreContainer>> STORE_BLOCK_CONTAINER = CONTAINERS.register("store_block",
 			() -> IForgeContainerType.create(StoreContainer::new)
+	);
+	public static final RegistryObject<ContainerType<StoreStorageContainer>> STORE_STORAGE_CONTAINER = CONTAINERS.register("store_storage",
+			() -> IForgeContainerType.create(StoreStorageContainer::new)
 	);
 	
 	public static void register() {
