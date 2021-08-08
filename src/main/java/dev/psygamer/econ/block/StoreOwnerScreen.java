@@ -474,7 +474,9 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 			}
 		}
 		
-		this.nameField.charTyped(typedChar, keyCode);
+		if (this.font.width(this.nameField.getValue() + typedChar) <= 124)
+			this.nameField.charTyped(typedChar, keyCode);
+		
 		this.menu.setChanged();
 		
 		EConPacketHandler.INSTANCE.sendToServer(

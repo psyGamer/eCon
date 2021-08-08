@@ -113,8 +113,10 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 				Color.fromLegacyFormat(TextFormatting.GOLD).getValue()
 		);
 		
-		this.font.draw(matrix, this.tileEntity.getName(),
-				this.width / 2f - (this.font.width(this.tileEntity.getName()) / 2f), this.height / 2f - this.imageHeight / 2f + 7,
+		final String storeName = this.tileEntity.getName().isEmpty() ? "Store" : this.tileEntity.getName();
+		
+		this.font.draw(matrix, new StringTextComponent(storeName),
+				this.width / 2f - (this.font.width(storeName) / 2f), this.height / 2f - this.imageHeight / 2f + 7,
 				
 				0x404040
 		);

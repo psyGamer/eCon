@@ -31,7 +31,7 @@ public class StoreOwnerMessage {
 	public StoreOwnerMessage(final PacketBuffer buffer) {
 		this(
 				buffer.readInt(),
-				(String) buffer.readCharSequence(buffer.readInt(), Charset.defaultCharset()),
+				(String) buffer.readCharSequence(Math.min(buffer.readInt(), 32), Charset.defaultCharset()),
 				buffer.readItem(),
 				buffer.readBlockPos()
 		);
@@ -47,8 +47,8 @@ public class StoreOwnerMessage {
 	
 	public void encode(final PacketBuffer buffer) {
 		buffer.writeInt(this.itemPrice);
-		buffer.writeInt(this.itemName.length());
-		buffer.writeCharSequence(this.itemName, Charset.defaultCharset());
+		buffer.writeInt(Math.min(this.itemName.length(), 32));
+		buffer.writeCharSequence(this.itemName.substring(0, 32), Charset.defaultCharset());
 		buffer.writeItem(this.offeredItem);
 		buffer.writeBlockPos(this.tileEntityPos);
 	}
