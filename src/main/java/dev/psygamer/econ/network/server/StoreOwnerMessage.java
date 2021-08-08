@@ -74,7 +74,7 @@ public class StoreOwnerMessage {
 				
 				storeTileEntity.setName(this.itemName);
 				storeTileEntity.setPrice(this.itemPrice);
-				storeTileEntity.setItem(0, this.offeredItem);
+				storeTileEntity.setOfferedItem(this.offeredItem);
 				
 				storeTileEntity.setChanged();
 			}

@@ -21,13 +21,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class StoreTileEntity extends TileEntity implements IInventory, ITickableTileEntity, INamedContainerProvider {
+public class StoreTileEntity extends TileEntity implements IItemHandlerModifiable, ITickableTileEntity, INamedContainerProvider {
 	
 	public static final int SLOTS = 37;
 	
@@ -38,12 +41,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	private UUID owner;
 	private int price;
 	
-	private final IItemHandler offeredItemHandler = new ItemStackHandler(1);
 	private final NonNullList<ItemStack> items = NonNullList.withSize(SLOTS, ItemStack.EMPTY);
-	
-	public IItemHandler getOfferedItemHandler() {
-		return this.offeredItemHandler;
-	}
 	
 	public StoreTileEntity() {
 		super(TileEntityTypeRegistry.STORE_BLOCK_TYPE.get());
@@ -53,57 +51,6 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	public void tick() {
 		this.prevItemRotation = this.itemRotation;
 		this.itemRotation = (this.itemRotation + 0.03f) % 360;
-	}
-	
-	@Override
-	public ItemStack removeItem(final int slot, final int amount) {
-		final ItemStack itemCopy = ItemStackHelper.removeItem(this.items, slot, amount);
-		
-		if (!itemCopy.isEmpty()) {
-			this.setChanged();
-		}
-		
-		return itemCopy;
-	}
-	
-	@Override
-	public ItemStack removeItemNoUpdate(final int slot) {
-		return ItemStackHelper.takeItem(Lists.newArrayList(this.items), slot);
-	}
-	
-	@Override
-	public void setItem(final int slot, final ItemStack itemStack) {
-		this.items.set(slot, itemStack);
-		
-		if (itemStack.getCount() > this.getMaxStackSize()) {
-			itemStack.setCount(this.getMaxStackSize());
-		}
-		
-		this.setChanged();
-	}
-	
-	@Override
-	public boolean stillValid(final PlayerEntity player) {
-		if (player.level.getBlockEntity(this.worldPosition) != this) {
-			return false;
-		}
-		
-		return !(player.distanceToSqr(
-				(double) this.worldPosition.getX() + 0.5D,
-				(double) this.worldPosition.getY() + 0.5D,
-				(double) this.worldPosition.getZ() + 0.5D
-		) > 64.0D);
-
-//		return player.distanceToSqr(
-//				(double) this.worldPosition.getX() + 0.5D,
-//				(double) this.worldPosition.getY() + 0.5D,
-//				(double) this.worldPosition.getZ() + 0.5D
-//		) < 64.0D;
-	}
-	
-	@Override
-	public void clearContent() {
-		this.items.clear();
 	}
 	
 	@Override
@@ -161,31 +108,69 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		load(null, pkt.getTag());
 	}
 	
-	@Override
-	public int getContainerSize() {
-		return SLOTS;
-	}
-	
-	@Override
-	public boolean isEmpty() {
-		return this.items.isEmpty();
-	}
-	
-	@Override
-	public ItemStack getItem(final int slot) {
-		return this.items.get(slot);
-	}
-	
 	public NonNullList<ItemStack> getItems() {
 		return this.items;
 	}
 	
+	@Override
+	public int getSlots() {
+		return SLOTS;
+	}
+	
+	@Override
+	public void setStackInSlot(final int slot, @Nonnull final ItemStack stack) {
+		this.items.set(slot, stack);
+	}
+	
+	@Nonnull
+	@Override
+	public ItemStack getStackInSlot(final int slot) {
+		return this.items.get(slot);
+	}
+	
+	@Nonnull
+	@Override
+	public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
+		this.items.set(slot, stack);
+		
+		if (stack.getCount() > stack.getMaxStackSize()) {
+			stack.setCount(stack.getMaxStackSize());
+		}
+		
+		this.setChanged();
+		
+		return ItemStack.EMPTY;
+	}
+	
+	@Nonnull
+	@Override
+	public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
+		final ItemStack itemCopy = ItemStackHelper.removeItem(this.items, slot, amount);
+		
+		if (!itemCopy.isEmpty()) {
+			this.setChanged();
+		}
+		
+		return itemCopy;
+	}
+	
+	@Override
+	public int getSlotLimit(final int slot) {
+		return getStackInSlot(slot).getMaxStackSize();
+	}
+	
+	@Override
+	public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
+		return true;
+	}
+	
 	public ItemStack getOfferedItem() {
-		return getItem(0);
+		return this.items.get(0);
 	}
 	
 	public void setOfferedItem(final ItemStack offeredItem) {
-		setItem(0, offeredItem);
+		this.items.set(0, offeredItem);
+		setChanged();
 	}
 	
 	public String getName() {
@@ -219,5 +204,4 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	public float getPrevItemRotation() {
 		return this.prevItemRotation;
 	}
-	
 }

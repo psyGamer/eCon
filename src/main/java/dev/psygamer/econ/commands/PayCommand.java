@@ -17,6 +17,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.time.Instant;
 
@@ -49,6 +50,7 @@ public class PayCommand {
 			
 			if (amount > BankAccountHandler.getBalance(player.getUUID())) {
 				player.sendMessage(
+//						new TranslationTextComponent()
 						new StringTextComponent(TextFormatting.RED + "You don't have that much money!"),
 						player.getUUID()
 				);

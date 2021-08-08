@@ -35,7 +35,7 @@ public class StoreContainer extends Container {
 		this.playerInventory = playerInventory;
 		this.tileEntity = tileEntity;
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
-		this.fakeSlot = new StoreFakeSlot(this, tileEntity.getOfferedItemHandler(), 0, 118, 69);
+		this.fakeSlot = new StoreFakeSlot(this, tileEntity, 0, 118, 69);
 		
 		this.fakeSlot.set(tileEntity.getOfferedItem());
 		
