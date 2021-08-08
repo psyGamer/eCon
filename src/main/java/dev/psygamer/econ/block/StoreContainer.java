@@ -2,9 +2,9 @@ package dev.psygamer.econ.block;
 
 import dev.psygamer.econ.setup.ContainerRegistry;
 
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class StoreContainer extends Container {
 	
-	private StoreOwnerScreen ownerScreen;
+	private ContainerScreen<StoreContainer> ownerScreen;
 	
 	private final PlayerInventory playerInventory;
 	private final StoreTileEntity tileEntity;
@@ -83,6 +83,10 @@ public class StoreContainer extends Container {
 			return super.clicked(slotId, dragType, clickType, player);
 		}
 		
+		if (slot instanceof StoreStorageSlot && !(this.ownerScreen instanceof StoreStorageScreen)) {
+			return ItemStack.EMPTY;
+		}
+		
 		// Disable hot keying to avoid possible problems
 		if (dragType == -1 && clickType == ClickType.SWAP) {
 			return ItemStack.EMPTY;
@@ -102,8 +106,8 @@ public class StoreContainer extends Container {
 			slot.set(player.inventory.getCarried().copy());
 		}
 		
-		if (this.ownerScreen != null)
-			this.ownerScreen.onItemUpdate(slot.getItem());
+		if (this.ownerScreen instanceof StoreOwnerScreen)
+			((StoreOwnerScreen) this.ownerScreen).onItemUpdate(slot.getItem());
 		
 		return player.inventory.getCarried();
 	}
@@ -137,6 +141,8 @@ public class StoreContainer extends Container {
 	public ItemStack quickMoveStack(final PlayerEntity playerEntity, final int index) {
 		final Slot slot = this.slots.get(index);
 		
+		if (slot instanceof StoreFakeSlot) return slot.getItem();
+		
 		if (slot != null && slot.hasItem()) {
 			final ItemStack itemStack = slot.getItem();
 			
@@ -160,11 +166,11 @@ public class StoreContainer extends Container {
 		return this.playerInventory;
 	}
 	
-	public StoreOwnerScreen getOwnerScreen() {
+	public ContainerScreen<StoreContainer> getOwnerScreen() {
 		return this.ownerScreen;
 	}
 	
-	public void setOwnerScreen(final StoreOwnerScreen ownerScreen) {
+	public void setOwnerScreen(final ContainerScreen<StoreContainer> ownerScreen) {
 		this.ownerScreen = ownerScreen;
 	}
 	

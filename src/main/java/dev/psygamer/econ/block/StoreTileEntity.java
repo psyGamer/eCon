@@ -111,6 +111,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		super.load(state, compound);
 		
 		setName(compound.getString("name"));
+		setOwner(compound.getUUID("owner"));
 		setPrice(compound.getInt("price"));
 		
 		ItemStackHelper.loadAllItems(compound, this.items);
@@ -121,6 +122,7 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 		super.save(compound);
 		
 		compound.putString("name", getName());
+		compound.putUUID("owner", getOwner());
 		compound.putInt("price", getPrice());
 		return ItemStackHelper.saveAllItems(compound, this.items);
 	}
@@ -132,7 +134,10 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	
 	@Override
 	public Container createMenu(final int windowID, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
-		return new StoreContainer(windowID, playerInventory, this);
+		if (playerEntity.getUUID().equals(this.owner))
+			return new StoreContainer(windowID, playerInventory, this);
+		
+		return new StoreCustomerContainer(windowID, playerInventory, this);
 	}
 	
 	@Override
@@ -169,6 +174,10 @@ public class StoreTileEntity extends TileEntity implements IInventory, ITickable
 	@Override
 	public ItemStack getItem(final int slot) {
 		return this.items.get(slot);
+	}
+	
+	public NonNullList<ItemStack> getItems() {
+		return this.items;
 	}
 	
 	public ItemStack getOfferedItem() {

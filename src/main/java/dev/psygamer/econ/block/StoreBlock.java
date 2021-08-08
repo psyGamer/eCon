@@ -5,7 +5,11 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
@@ -21,6 +25,8 @@ import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
@@ -99,7 +105,9 @@ public class StoreBlock extends HorizontalBlock {
 			final TileEntity tileEntity = world.getBlockEntity(pos);
 			
 			if (tileEntity instanceof StoreTileEntity) {
-				NetworkHooks.openGui((ServerPlayerEntity) playerEntity, (StoreTileEntity) tileEntity, pos);
+				final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+//				playerEntity.openMenu(containerProvider);
+				NetworkHooks.openGui((ServerPlayerEntity) playerEntity, storeTileEntity, pos);
 				
 				return ActionResultType.CONSUME;
 			}
