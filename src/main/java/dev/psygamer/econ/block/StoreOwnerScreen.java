@@ -27,6 +27,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lwjgl.glfw.GLFW;
 
+import javax.annotation.Nullable;
+
 @OnlyIn(Dist.CLIENT)
 public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 	
@@ -479,6 +481,25 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		);
 		
 		return true;
+	}
+	
+	@Nullable
+	@Override
+	public Slot findSlot(final double mouseX, final double mouseY) {
+		for (int i = 0 ; i < this.menu.slots.size() ; ++i) {
+			final Slot slot = this.menu.slots.get(i);
+			
+			if (slot instanceof StoreStorageSlot) continue;
+			
+			if (slot instanceof StoreFakeSlot &&
+					slot.isActive() &&
+					this.isHovering(slot.x, slot.y, 32, 32, mouseX, mouseY))
+				return slot;
+			else if (this.isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY) && slot.isActive())
+				return slot;
+		}
+		
+		return null;
 	}
 	
 	private void updateItemStack() {

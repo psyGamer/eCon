@@ -18,6 +18,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nullable;
+
 public class StoreStorageScreen extends ContainerScreen<StoreContainer> {
 	
 	private static final ResourceLocation STORE_STORAGE_LOCATION = new ResourceLocation(ECon.MODID, "textures/gui/store_storage_gui.png");
@@ -26,6 +28,8 @@ public class StoreStorageScreen extends ContainerScreen<StoreContainer> {
 	
 	protected StoreStorageScreen(final StoreContainer container, final PlayerInventory playerInventory, final ITextComponent title) {
 		super(container, playerInventory, title);
+		
+		this.menu.setOwnerScreen(this);
 		
 		this.inventoryLabelY = 98;
 		
@@ -181,5 +185,20 @@ public class StoreStorageScreen extends ContainerScreen<StoreContainer> {
 	public boolean mouseClicked(final double p_231044_1_, final double p_231044_3_, final int p_231044_5_) {
 		this.storeButton.mouseClicked(p_231044_1_, p_231044_3_, p_231044_5_);
 		return super.mouseClicked(p_231044_1_, p_231044_3_, p_231044_5_);
+	}
+	
+	@Nullable
+	@Override
+	public Slot findSlot(final double mouseX, final double mouseY) {
+		for (int i = 0 ; i < this.menu.slots.size() ; ++i) {
+			final Slot slot = this.menu.slots.get(i);
+			
+			if (slot instanceof StoreFakeSlot) continue;
+			
+			if (this.isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY) && slot.isActive())
+				return slot;
+		}
+		
+		return null;
 	}
 }

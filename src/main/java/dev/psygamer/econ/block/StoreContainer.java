@@ -79,12 +79,12 @@ public class StoreContainer extends Container {
 	public ItemStack clicked(final int slotId, final int dragType, final ClickType clickType, final PlayerEntity player) {
 		final Slot slot = slotId >= 0 ? this.slots.get(slotId) : null;
 		
-		if (!(slot instanceof StoreFakeSlot)) {
-			return super.clicked(slotId, dragType, clickType, player);
-		}
-		
 		if (slot instanceof StoreStorageSlot && !(this.ownerScreen instanceof StoreStorageScreen)) {
 			return ItemStack.EMPTY;
+		}
+		
+		if (!(slot instanceof StoreFakeSlot)) {
+			return super.clicked(slotId, dragType, clickType, player);
 		}
 		
 		// Disable hot keying to avoid possible problems
