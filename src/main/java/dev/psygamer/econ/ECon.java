@@ -5,6 +5,7 @@ import dev.psygamer.econ.banking.*;
 import dev.psygamer.econ.block.StoreCustomerScreen;
 import dev.psygamer.econ.block.StoreOwnerScreen;
 import dev.psygamer.econ.block.StoreRenderer;
+import dev.psygamer.econ.block.StoreStorageScreen;
 import dev.psygamer.econ.client.KeybindingsRegistry;
 import dev.psygamer.econ.commands.GetBalanceCommand;
 import dev.psygamer.econ.commands.PayCommand;
@@ -88,6 +89,7 @@ public class ECon {
 	private void onClientSetup(final FMLClientSetupEvent event) {
 		KeybindingsRegistry.load();
 		ScreenManager.register(ContainerRegistry.STORE_BLOCK_CONTAINER.get(), StoreOwnerScreen::new);
+		ScreenManager.register(ContainerRegistry.STORE_STORAGE_CONTAINER.get(), StoreStorageScreen::new);
 		ScreenManager.register(ContainerRegistry.STORE_CUSTOMER_CONTAINER.get(), StoreCustomerScreen::new);
 		
 		RenderTypeLookup.setRenderLayer(BlockRegistry.STORE_BLOCK.get(), RenderType.cutout());

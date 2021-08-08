@@ -17,7 +17,7 @@ import java.util.Objects;
 
 public class StoreContainer extends Container {
 	
-	private ContainerScreen<StoreContainer> ownerScreen;
+	private StoreOwnerScreen ownerScreen;
 	
 	private final PlayerInventory playerInventory;
 	private final StoreTileEntity tileEntity;
@@ -57,16 +57,6 @@ public class StoreContainer extends Container {
 			));
 		}
 		
-		for (int row = 0 ; row < 3 ; row++) {
-			for (int col = 0 ; col < 9 ; col++) {
-				this.addSlot(new StoreStorageSlot(tileEntity,
-						row * 9 + col + 1,
-						8 + col * 18,
-						31 + row * 18
-				));
-			}
-		}
-		
 		this.addSlot(this.fakeSlot);
 	}
 	
@@ -78,10 +68,6 @@ public class StoreContainer extends Container {
 	@Override
 	public ItemStack clicked(final int slotId, final int dragType, final ClickType clickType, final PlayerEntity player) {
 		final Slot slot = slotId >= 0 ? this.slots.get(slotId) : null;
-		
-		if (slot instanceof StoreStorageSlot && !(this.ownerScreen instanceof StoreStorageScreen)) {
-			return ItemStack.EMPTY;
-		}
 		
 		if (!(slot instanceof StoreFakeSlot)) {
 			return super.clicked(slotId, dragType, clickType, player);
@@ -141,36 +127,36 @@ public class StoreContainer extends Container {
 	public ItemStack quickMoveStack(final PlayerEntity playerEntity, final int index) {
 		final Slot slot = this.slots.get(index);
 		
-		if (slot instanceof StoreFakeSlot) return slot.getItem();
-		
-		if (slot != null && slot.hasItem()) {
-			final ItemStack itemStack = slot.getItem();
-			
-			if ((index < StoreTileEntity.SLOTS && !this.moveItemStackTo(itemStack, StoreTileEntity.SLOTS, this.slots.size(), true)) ||
-					!this.moveItemStackTo(itemStack, 0, StoreTileEntity.SLOTS, false)
-			) {
-				return ItemStack.EMPTY;
-			}
-			
-			if (itemStack.isEmpty()) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-			}
-		}
-		
 		return ItemStack.EMPTY;
+
+//		if (slot != null && slot.hasItem()) {
+//			final ItemStack itemStack = slot.getItem();
+//
+//			if ((index < StoreTileEntity.SLOTS && !this.moveItemStackTo(itemStack, StoreTileEntity.SLOTS, this.slots.size(), true)) ||
+//					!this.moveItemStackTo(itemStack, 0, StoreTileEntity.SLOTS, false)
+//			) {
+//				return ItemStack.EMPTY;
+//			}
+//
+//			if (itemStack.isEmpty()) {
+//				slot.set(ItemStack.EMPTY);
+//			} else {
+//				slot.setChanged();
+//			}
+//		}
+//
+//		return ItemStack.EMPTY;
 	}
 	
 	public PlayerInventory getPlayerInventory() {
 		return this.playerInventory;
 	}
 	
-	public ContainerScreen<StoreContainer> getOwnerScreen() {
+	public StoreOwnerScreen getOwnerScreen() {
 		return this.ownerScreen;
 	}
 	
-	public void setOwnerScreen(final ContainerScreen<StoreContainer> ownerScreen) {
+	public void setOwnerScreen(final StoreOwnerScreen ownerScreen) {
 		this.ownerScreen = ownerScreen;
 	}
 	

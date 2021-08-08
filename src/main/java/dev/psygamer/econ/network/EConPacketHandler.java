@@ -7,9 +7,7 @@ import dev.psygamer.econ.network.client.BankAccountMessage;
 import dev.psygamer.econ.network.client.NewTransactionMessage;
 import dev.psygamer.econ.network.client.RegisteredBankAccountsMessage;
 import dev.psygamer.econ.network.client.TransactionHistoryMessage;
-import dev.psygamer.econ.network.server.StoreOwnerMessage;
-import dev.psygamer.econ.network.server.StoreTransactionMessage;
-import dev.psygamer.econ.network.server.TransactionMessage;
+import dev.psygamer.econ.network.server.*;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -42,5 +40,7 @@ public class EConPacketHandler {
 		INSTANCE.registerMessage(channelID++, TransactionMessage.class, TransactionMessage::encode, TransactionMessage::decode, TransactionMessage::handle);
 		INSTANCE.registerMessage(channelID++, StoreTransactionMessage.class, StoreTransactionMessage::encode, StoreTransactionMessage::new, StoreTransactionMessage::handle);
 		INSTANCE.registerMessage(channelID++, StoreOwnerMessage.class, StoreOwnerMessage::encode, StoreOwnerMessage::new, StoreOwnerMessage::handle);
+		INSTANCE.registerMessage(channelID++, StoreSetupContainerMessage.class, StoreSetupContainerMessage::encode, StoreSetupContainerMessage::new, StoreSetupContainerMessage::handle);
+		INSTANCE.registerMessage(channelID++, StoreStorageContainerMessage.class, StoreStorageContainerMessage::encode, StoreStorageContainerMessage::new, StoreStorageContainerMessage::handle);
 	}
 }

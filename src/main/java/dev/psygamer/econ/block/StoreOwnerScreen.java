@@ -10,6 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.StoreOwnerMessage;
+import dev.psygamer.econ.network.server.StoreStorageContainerMessage;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -74,7 +75,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 				
 				STORE_LOCATION, (int) (256 * ntBtnScale), (int) (256 * ntBtnScale),
 				
-				onPress -> this.minecraft.setScreen(new StoreStorageScreen(this.menu, this.menu.getPlayerInventory(), StringTextComponent.EMPTY))
+				onPress -> EConPacketHandler.INSTANCE.sendToServer(new StoreStorageContainerMessage(this.tileEntity.getBlockPos()))
 		);
 		
 		this.nameField = new TextField(this.font, xPos + 22, yPos + 37, 134, 15, 5, 3);
