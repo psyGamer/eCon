@@ -65,7 +65,7 @@ public class StoreTransactionMessage {
 				final int totalItemQuantity = storeTileEntity.getItems().stream()
 						.mapToInt(itemStack -> areItemsSame(offeredItem, itemStack) ? itemStack.getCount() : 0)
 						.reduce(Integer::sum)
-						.orElse(0);
+						.orElse(0) - offeredItem.getCount();
 				
 				if (this.quantity * offeredItem.getCount() > totalItemQuantity) return;
 				
