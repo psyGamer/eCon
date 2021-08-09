@@ -22,7 +22,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 
@@ -36,6 +35,8 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	
 	private float itemRotation = 0f;
 	private float prevItemRotation = 0f;
+	
+	private int stockLeft;
 	
 	private String name;
 	private UUID owner;
@@ -61,6 +62,11 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 		setOwner(compound.getUUID("owner"));
 		setPrice(compound.getInt("price"));
 		
+		this.stockLeft = this.getItems().stream()
+				.mapToInt(itemStack -> itemStack.getItem() == getOfferedItem().getItem() && ItemStack.tagMatches(itemStack, getOfferedItem()) ? itemStack.getCount() : 0)
+				.reduce(Integer::sum)
+				.orElse(0) - getOfferedItem().getCount();
+		
 		ItemStackHelper.loadAllItems(compound, this.items);
 	}
 	
@@ -71,6 +77,7 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 		compound.putString("name", getName());
 		compound.putUUID("owner", getOwner());
 		compound.putInt("price", getPrice());
+		
 		return ItemStackHelper.saveAllItems(compound, this.items);
 	}
 	
@@ -89,23 +96,29 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	
 	@Override
 	public CompoundNBT getUpdateTag() {
-		return save(new CompoundNBT());
+		final CompoundNBT saveData = save(new CompoundNBT());
+		
+		saveData.putInt("stockLeft", this.stockLeft);
+		
+		return saveData;
 	}
 	
 	@Override
 	public void handleUpdateTag(final BlockState state, final CompoundNBT tag) {
 		load(state, tag);
+		
+		this.stockLeft = tag.getInt("stockLeft");
 	}
 	
 	@Nullable
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(getBlockPos(), -1, save(new CompoundNBT()));
+		return new SUpdateTileEntityPacket(getBlockPos(), -1, getUpdateTag());
 	}
 	
 	@Override
 	public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
-		load(null, pkt.getTag());
+		handleUpdateTag(null, pkt.getTag());
 	}
 	
 	public NonNullList<ItemStack> getItems() {
@@ -145,13 +158,13 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	@Nonnull
 	@Override
 	public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
-		final ItemStack itemCopy = ItemStackHelper.removeItem(this.items, slot, amount);
+		final ItemStack extractedStack = ItemStackHelper.removeItem(this.items, slot, amount);
 		
-		if (!itemCopy.isEmpty()) {
+		if (!extractedStack.isEmpty()) {
 			this.setChanged();
 		}
 		
-		return itemCopy;
+		return extractedStack;
 	}
 	
 	@Override
@@ -203,5 +216,13 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	
 	public float getPrevItemRotation() {
 		return this.prevItemRotation;
+	}
+	
+	public void setLeftStock(final int leftStock) {
+		this.stockLeft = leftStock;
+	}
+	
+	public int getLeftStock() {
+		return this.stockLeft;
 	}
 }

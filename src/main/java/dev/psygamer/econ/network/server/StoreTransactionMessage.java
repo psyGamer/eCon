@@ -1,10 +1,10 @@
 package dev.psygamer.econ.network.server;
 
-import com.mojang.datafixers.util.Pair;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
 import dev.psygamer.econ.block.StoreTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -13,6 +13,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.time.Instant;
@@ -62,24 +63,20 @@ public class StoreTransactionMessage {
 				
 				final ItemStack offeredItem = storeTileEntity.getOfferedItem();
 				
-				final int totalItemQuantity = storeTileEntity.getItems().stream()
-						.mapToInt(itemStack -> areItemsSame(offeredItem, itemStack) ? itemStack.getCount() : 0)
-						.reduce(Integer::sum)
-						.orElse(0) - offeredItem.getCount();
-				
-				if (this.quantity * offeredItem.getCount() > totalItemQuantity) return;
+				if (this.quantity * offeredItem.getCount() > storeTileEntity.getLeftStock()) return;
 				
 				final Transaction storeTransaction = new Transaction(serverPlayer.getUUID(), storeTileEntity.getOwner(), price, Instant.now().getEpochSecond());
 				
 				TransactionHandler.processTransaction(storeTransaction);
 				
-				giveItems(serverPlayer, offeredItem, this.quantity * offeredItem.getCount());
+				giveItemsToPlayer(serverPlayer, offeredItem, this.quantity * offeredItem.getCount());
+				removeItemsFromStorage(storeTileEntity, offeredItem, this.quantity * offeredItem.getCount());
 			}
 		});
 		ctx.get().setPacketHandled(true);
 	}
 	
-	private static void giveItems(final ServerPlayerEntity serverPlayer, final ItemStack offeredItem, final int quantity) {
+	private static void giveItemsToPlayer(final ServerPlayerEntity serverPlayer, final ItemStack offeredItem, final int quantity) {
 		int itemsLeft = quantity;
 		
 		while (itemsLeft > 0) {
@@ -100,6 +97,32 @@ public class StoreTransactionMessage {
 				itemEntity.setOwner(serverPlayer.getUUID());
 			}
 		}
+	}
+	
+	private static void removeItemsFromStorage(final StoreTileEntity tileEntity, final ItemStack offeredItem, final int quantity) {
+		int itemsLeft = quantity;
+		
+		for (int i = 1 ; i < tileEntity.getSlots() ; i++) {
+			final ItemStack itemStack = tileEntity.getStackInSlot(i);
+			
+			if (!areItemsSame(offeredItem, itemStack))
+				continue;
+			
+			tileEntity.extractItem(i, itemsLeft, false);
+			
+			if ((itemsLeft -= itemStack.getCount()) <= 0)
+				break;
+		}
+		
+		tileEntity.setLeftStock(tileEntity.getLeftStock() - quantity);
+		tileEntity.setChanged();
+		
+		final ServerWorld serverWorld = (ServerWorld) tileEntity.getLevel();
+		
+		final BlockPos blockPos = tileEntity.getBlockPos();
+		final BlockState blockState = serverWorld.getBlockState(blockPos);
+		
+		serverWorld.sendBlockUpdated(blockPos, blockState, blockState, Constants.BlockFlags.BLOCK_UPDATE);
 	}
 	
 	private static boolean areItemsSame(final ItemStack stackA, final ItemStack stackB) {
