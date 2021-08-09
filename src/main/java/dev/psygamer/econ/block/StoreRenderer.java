@@ -17,7 +17,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
@@ -148,7 +150,9 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 //		matrixStack.scale(scale, scale, scale);
 		matrixStack.scale(2 / 7f, 2 / 7f, 2 / 7f);
 		
-		font.drawInBatch(new StringTextComponent(price + "\u20AC"), 0, 0, color,
+		final ITextComponent textComponent = new StringTextComponent(price <= 0 ? TextFormatting.GREEN + "FREE" : price + "\u20AC");
+		
+		font.drawInBatch(textComponent, 0, 0, color,
 				false, matrixStack.last().pose(), renderBuffer,
 				false, 0x00000000, lightLevel
 		);

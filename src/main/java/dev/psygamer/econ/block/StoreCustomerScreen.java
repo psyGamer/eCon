@@ -60,9 +60,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 		
 		this.quantityField = new TextField(this.font, xPos + 70, yPos + 33, 15, 10, 1.5f, 1.5f);
 		this.quantityField.setMaxLength(2);
-		
-		if (this.getMenu().getPreviewSlot().getItem().getCount() > 0)
-			this.quantityField.setValue(String.valueOf(this.tileEntity.getOfferedItem().getCount()));
+		this.quantityField.setValue("1");
 		
 		this.quantityField.setValid(true);
 		
@@ -90,8 +88,13 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 	
 	@Override
 	public void tick() {
-		this.increaseQuantityButton.active = parseInt(this.quantityField.getValue()) < this.getMenu().getPreviewSlot().getItem().getMaxStackSize() && parseInt(this.quantityField.getValue()) > 0;
-		this.decreaseQuantityButton.active = parseInt(this.quantityField.getValue()) > 1;
+		final int quantity = parseInt(this.quantityField.getValue());
+		final int totalQuantity = quantity * this.tileEntity.getOfferedItem().getCount();
+		
+		this.increaseQuantityButton.active = totalQuantity < this.tileEntity.getLeftStock();
+		this.decreaseQuantityButton.active = quantity > 1;
+		
+		this.orderButton.active = totalQuantity <= this.tileEntity.getLeftStock() && quantity > 0;
 		
 		super.tick();
 	}
@@ -279,7 +282,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 		try {
 			return Integer.parseInt(numberString);
 		} catch (final NumberFormatException ex) {
-			return -1;
+			return 1;
 		}
 	}
 	

@@ -195,7 +195,7 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	}
 	
 	public int getPrice() {
-		return this.price;
+		return Math.max(this.price, 0);
 	}
 	
 	public void setPrice(final int price) {
