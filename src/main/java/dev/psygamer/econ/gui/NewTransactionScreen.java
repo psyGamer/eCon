@@ -76,8 +76,8 @@ public class NewTransactionScreen extends Screen {
 		
 		addButton(newTransactionButton);
 		
-		this.playerNameInput = new TextField(this.font, this.width / 2 - 67, this.height / 2 - 57, 134, 20, 5, 3);
-		this.amountInput = new TextField(this.font, this.width / 2 - 67, this.height / 2 - 26, 134, 20, 5, 3);
+		this.playerNameInput = new TextField(this.font, xPos + 17, yPos + 64, 134, 20, 5, 3);
+		this.amountInput = new TextField(this.font, xPos + 17, yPos + 95, 134, 20, 5, 3);
 		this.submitButton = new Button(this.width / 2 - 67, this.height / 2 + 60, 134, 20,
 				new StringTextComponent("Process Transaction"), onPress -> {
 			
