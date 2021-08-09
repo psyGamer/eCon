@@ -48,7 +48,7 @@ public class StoreOwnerMessage {
 	public void encode(final PacketBuffer buffer) {
 		buffer.writeInt(this.itemPrice);
 		buffer.writeInt(Math.min(this.itemName.length(), 32));
-		buffer.writeCharSequence(this.itemName.substring(0, 32), Charset.defaultCharset());
+		buffer.writeCharSequence(limitStringLength(this.itemName, 32), Charset.defaultCharset());
 		buffer.writeItem(this.offeredItem);
 		buffer.writeBlockPos(this.tileEntityPos);
 	}
@@ -80,5 +80,13 @@ public class StoreOwnerMessage {
 			}
 		});
 		context.get().setPacketHandled(true);
+	}
+	
+	private static String limitStringLength(final String string, final int maxLength) {
+		if (string.length() > maxLength) {
+			return string.substring(0, maxLength);
+		}
+		
+		return string;
 	}
 }
