@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
@@ -31,6 +33,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -89,6 +92,23 @@ public class StoreBlock extends HorizontalBlock {
 			if (tileEntity instanceof StoreTileEntity) {
 				((StoreTileEntity) tileEntity).setOwner(placer.getUUID());
 			}
+		}
+	}
+	
+	@Override
+	@SuppressWarnings("deprecation")
+	public void onRemove(final BlockState oldBlockState, final World world, final BlockPos pos, final BlockState newBlockState, final boolean p_196243_5_) {
+		if (oldBlockState.hasTileEntity() && !oldBlockState.is(newBlockState.getBlock())) {
+			final TileEntity tileEntity = world.getBlockEntity(pos);
+			
+			if (tileEntity instanceof StoreTileEntity) {
+				final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+				for (int i = 1 ; i < storeTileEntity.getSlots() ; i++) {
+					Block.popResource(world, pos, storeTileEntity.getStackInSlot(i));
+				}
+			}
+			
+			world.removeBlockEntity(pos);
 		}
 	}
 	
