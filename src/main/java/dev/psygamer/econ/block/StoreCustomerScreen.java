@@ -108,12 +108,43 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 		final int xPos = this.width / 2 - this.imageWidth / 2;
 		final int yPos = this.height / 2 - this.imageHeight / 2;
 		
-		final float scale = 1.6f;
+		final boolean isFree = this.tileEntity.getPrice() <= 0;
+		final String priceString = isFree ? "FREE" : this.tileEntity.getPrice() * parseInt(this.quantityField.getValue()) + "\u20AC";
 		
-		this.font.drawShadow(matrix, String.valueOf(this.tileEntity.getPrice() * parseInt(this.quantityField.getValue())),
-				xPos + 16, yPos + 33,
+		this.font.draw(matrix, "Total Price",
+				xPos + 6, yPos + 17,
 				
-				Color.fromLegacyFormat(TextFormatting.GOLD).getValue()
+				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()
+		);
+		
+		this.font.drawShadow(matrix, TextFormatting.BOLD + priceString,
+				xPos + 9, yPos + 27,
+				
+				Color.fromLegacyFormat(isFree ? TextFormatting.GREEN : TextFormatting.GOLD).getValue()
+		);
+		
+		final int instancesLeftInStock = (int) Math.floor(
+				this.tileEntity.getLeftStock() / (float) this.tileEntity.getOfferedItem().getCount()
+		);
+		final Color leftInStockColor;
+		
+		if (instancesLeftInStock <= 3)
+			leftInStockColor = Color.fromLegacyFormat(TextFormatting.RED);
+		else if (instancesLeftInStock <= 5)
+			leftInStockColor = Color.fromLegacyFormat(TextFormatting.YELLOW);
+		else
+			leftInStockColor = Color.fromLegacyFormat(TextFormatting.GREEN);
+		
+		this.font.draw(matrix, "Stock left",
+				xPos + 6, yPos + 42,
+				
+				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()
+		);
+		
+		this.font.drawShadow(matrix, TextFormatting.BOLD + String.valueOf(instancesLeftInStock <= 0 ? "SOLD OUT" : instancesLeftInStock),
+				xPos + 9, yPos + 52,
+				
+				leftInStockColor.getValue()
 		);
 		
 		final String storeName = this.tileEntity.getName().isEmpty() ? "Store" : this.tileEntity.getName();

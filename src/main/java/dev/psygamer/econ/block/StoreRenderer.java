@@ -17,6 +17,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -64,7 +65,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 				partialTicks, combinedLight, lightLevel
 		);
 		
-		renderPriceLabel(matrix, renderBuffer, tileEntity.getPrice(),
+		renderPriceLabel(matrix, renderBuffer, tileEntity.getPrice(), tileEntity.getLeftStock(),
 				facingDirection, lightLevel, 0x2B303D
 		);
 		renderStockLabel(matrix, renderBuffer, tileEntity.getOfferedItem().getCount(),
@@ -92,7 +93,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		matrix.popPose();
 	}
 	
-	private void renderPriceLabel(final MatrixStack matrixStack, final IRenderTypeBuffer renderBuffer, final int price,
+	private void renderPriceLabel(final MatrixStack matrixStack, final IRenderTypeBuffer renderBuffer, final int price, final int leftStock,
 								  final Direction facingDirection, final int lightLevel, final int color
 	) {
 		final FontRenderer font = this.minecraft.font;
@@ -150,9 +151,22 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 //		matrixStack.scale(scale, scale, scale);
 		matrixStack.scale(2 / 7f, 2 / 7f, 2 / 7f);
 		
-		final ITextComponent textComponent = new StringTextComponent(price <= 0 ? TextFormatting.GREEN + "FREE" : price + "\u20AC");
+		final ITextComponent textComponent;
+		final Color textColor;
 		
-		font.drawInBatch(textComponent, 0, 0, color,
+		/*if (leftStock <= 0) { Only use once the text gets renderer properly
+			textComponent = new StringTextComponent("SOLD OUT");
+			textColor = Color.fromLegacyFormat(TextFormatting.RED);
+		} else*/
+		if (price <= 0) {
+			textComponent = new StringTextComponent("FREE");
+			textColor = Color.fromLegacyFormat(TextFormatting.GREEN);
+		} else {
+			textComponent = new StringTextComponent(price + "\u20AC");
+			textColor = Color.parseColor("#2B303D");
+		}
+		
+		font.drawInBatch(textComponent, 0, 0, textColor.getValue(),
 				false, matrixStack.last().pose(), renderBuffer,
 				false, 0x00000000, lightLevel
 		);
