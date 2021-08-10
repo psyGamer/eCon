@@ -86,7 +86,7 @@ public class StoreBlock extends HorizontalBlock {
 	
 	@Override
 	public void setPlacedBy(final World world, final BlockPos pos, final BlockState state, final LivingEntity placer, final ItemStack heldItem) {
-		if (world.isLoaded(pos)) {
+		if (!world.isClientSide() && world.isLoaded(pos)) {
 			final TileEntity tileEntity = world.getBlockEntity(pos);
 			
 			if (tileEntity instanceof StoreTileEntity) {
@@ -126,6 +126,9 @@ public class StoreBlock extends HorizontalBlock {
 			
 			if (tileEntity instanceof StoreTileEntity) {
 				final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+				
+				if (storeTileEntity.getOwner() == null)
+					storeTileEntity.setOwner(playerEntity.getUUID());
 //				playerEntity.openMenu(containerProvider);
 				NetworkHooks.openGui((ServerPlayerEntity) playerEntity, storeTileEntity, pos);
 				

@@ -57,8 +57,10 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	public void load(final BlockState state, final CompoundNBT compound) {
 		super.load(state, compound);
 		
+		if (compound.contains("owner"))
+			setOwner(compound.getUUID("owner"));
+		
 		setName(compound.getString("name"));
-		setOwner(compound.getUUID("owner"));
 		setPrice(compound.getInt("price"));
 		
 		this.stockLeft = this.getItems().stream()
@@ -73,8 +75,10 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	public CompoundNBT save(final CompoundNBT compound) {
 		super.save(compound);
 		
+		if (getOwner() != null)
+			compound.putUUID("owner", getOwner());
+		
 		compound.putString("name", getName());
-		compound.putUUID("owner", getOwner());
 		compound.putInt("price", getPrice());
 		
 		return ItemStackHelper.saveAllItems(compound, this.items);
