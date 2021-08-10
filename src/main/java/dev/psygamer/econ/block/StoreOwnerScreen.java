@@ -240,7 +240,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 			
 			if (scale == 2.0f) {
 				RenderSystem.scalef(scale, scale, scale);
-				RenderSystem.translatef(slot.x / -scale, slot.y / -scale, -101); // idk why 101 but i works lol
+				RenderSystem.translatef(slot.x / -scale, slot.y / -scale, (this.itemRenderer.blitOffset + 300) / -2f);
 //				RenderSystem.tra
 			}
 			
@@ -270,7 +270,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 		if (!itemstack.isEmpty()) {
 			final int itemXOffset = this.draggingItem.isEmpty() ? 8 : 16;
 			
-			String quantityString = "";
+			String quantityString = null;
 			
 			if (!this.draggingItem.isEmpty() && this.isSplittingStack) {
 				itemstack = itemstack.copy();
