@@ -3,6 +3,7 @@ package dev.psygamer.econ.gui.widgets;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
+import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccount;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
@@ -88,7 +89,7 @@ public class TransactionEntry extends Widget {
 				Color.fromLegacyFormat(this.isReceivingMoney ? TextFormatting.GREEN : TextFormatting.RED).getValue()
 		);
 		
-		drawString(matrix, this.fontRenderer, this.transaction.getTransferAmount() + "\u20AC",
+		drawString(matrix, this.fontRenderer, this.transaction.getTransferAmount() + ECon.MONEY_SYMBOL,
 				
 				this.x + 33 + this.fontRenderer.width("\u00BB "),
 				this.y + guiHeight / 2 - 8,
@@ -103,7 +104,7 @@ public class TransactionEntry extends Widget {
 				this.x + 73,
 				this.y + guiHeight - this.fontRenderer.lineHeight - 4,
 				
-				Color.parseColor("#888888").getValue()
+				8947848//Color.parseColor("#888888").getValue()
 		);
 
 //		matrix.popPose();

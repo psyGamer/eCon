@@ -1,6 +1,5 @@
 package dev.psygamer.econ.gui.widgets;
 
-import com.google.common.eventbus.Subscribe;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -44,9 +43,9 @@ public class TextField extends TextFieldWidget {
 	
 	private final float offsetRight, offsetTop;
 	
-	private static final int TEXT_COLOR = Color.parseColor("#E0E0E0").getValue();
-	private static final int TEXT_COLOR_INVALID_ = Color.parseColor("#FF5555").getValue();
-	private static final int TEXT_COLOR_SUGGESTION = Color.parseColor("#808080").getValue();
+	private static final int TEXT_COLOR = 14737632;//Color.parseColor("#E0E0E0").getValue();
+	private static final int TEXT_COLOR_INVALID = 16733525;// = Color.parseColor("#FF5555").getValue();
+	private static final int TEXT_COLOR_SUGGESTION = 8421504;//Color.parseColor("#808080").getValue();
 	
 	public TextField(final FontRenderer fontRenderer, final int x, final int y, final int width, final int height, final float offsetRight, final float offsetTop) {
 		super(fontRenderer, x, y, width, height, StringTextComponent.EMPTY);
@@ -98,7 +97,7 @@ public class TextField extends TextFieldWidget {
 		this.font.drawShadow(matrix, getValue(),
 				xPos, yPos,
 				
-				this.isValid ? TEXT_COLOR : TEXT_COLOR_INVALID_
+				this.isValid ? TEXT_COLOR : TEXT_COLOR_INVALID
 		);
 		
 		if (highlightedFrom != highlightedTo) {
