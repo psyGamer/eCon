@@ -97,7 +97,7 @@ shadowJar {
 //    archiveBaseName.set(tasks.jar.getArchiveBaseName())
 //    archiveVersion.set(tasks.jar.getArchiveVersion())
 
-    classifier 'shadow'
+    classifier 'common'
     configurations = [project.configurations.shadow]
 
 
@@ -110,6 +110,10 @@ reobf {
 }
 
 jar {
+    classifier 'server'
+    dependsOn shadowJar
+    finalizedBy 'reobfJar'
+
     configurations.shadow.each {
         from(project.zipTree(it)) {
             exclude 'META-INF', 'META-INF/**'
@@ -128,6 +132,3 @@ jar {
         ])
     }
 }
-
-jar.finalizedBy 'reobfJar'
-jar.dependsOn shadowJar
