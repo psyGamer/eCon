@@ -13,6 +13,8 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class SetBalanceCommand {
 	
@@ -43,7 +45,7 @@ public class SetBalanceCommand {
 			BankAccountHandler.setBalance(target.getUUID(), balance);
 			
 			context.getSource().getServer().getPlayerList().broadcastMessage(
-					new StringTextComponent("Set balance of " + target.getDisplayName().getString() + " to " + balance),
+					new TranslationTextComponent("econ.command.setBalance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL)),
 					ChatType.CHAT,
 					context.getSource().getEntity().getUUID()
 			);

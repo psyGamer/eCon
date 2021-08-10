@@ -16,10 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -190,12 +187,12 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 				0x404040
 		);
 		
-		this.font.draw(matrix, new StringTextComponent("Name"),
+		this.font.draw(matrix, new TranslationTextComponent("econ.store.nameField"),
 				this.nameField.x + 3, this.nameField.y - 13,
 				
 				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()
 		);
-		this.font.draw(matrix, new StringTextComponent("Price"),
+		this.font.draw(matrix, new TranslationTextComponent("econ.store.priceField"),
 				this.priceField.x + 3, this.priceField.y - 13,
 				
 				Color.fromLegacyFormat(TextFormatting.DARK_GRAY).getValue()

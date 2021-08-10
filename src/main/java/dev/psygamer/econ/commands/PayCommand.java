@@ -19,6 +19,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import javax.xml.soap.Text;
 import java.time.Instant;
 
 public class PayCommand {
@@ -50,8 +51,8 @@ public class PayCommand {
 			
 			if (amount > BankAccountHandler.getBalance(player.getUUID())) {
 				player.sendMessage(
-//						new TranslationTextComponent()
-						new StringTextComponent(TextFormatting.RED + "You don't have that much money!"),
+						new TranslationTextComponent("econ.command.notEnoughMoney")
+								.withStyle(TextFormatting.RED),
 						player.getUUID()
 				);
 				player.playSound(SoundEvents.NOTE_BLOCK_PLING, 0.05f, 0.1f);
@@ -64,11 +65,11 @@ public class PayCommand {
 			);
 			
 			player.sendMessage(
-					new StringTextComponent(TextFormatting.GREEN + "You sent " + TextFormatting.GREEN + TextFormatting.BOLD + amount + TextFormatting.GREEN + "\u20AC to " + target.getDisplayName().getString()),
+					new TranslationTextComponent("econ.command.sent", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL), target.getDisplayName().getString()),
 					player.getUUID()
 			);
 			target.sendMessage(
-					new StringTextComponent(TextFormatting.GREEN + "You received " + TextFormatting.GREEN + TextFormatting.BOLD + amount + TextFormatting.GREEN + "\u20AC from " + player.getDisplayName().getString()),
+					new TranslationTextComponent("econ.command.received", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL), player.getDisplayName().getString()),
 					player.getUUID()
 			);
 			

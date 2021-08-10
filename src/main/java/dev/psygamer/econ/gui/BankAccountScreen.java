@@ -24,6 +24,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -77,7 +78,7 @@ public class BankAccountScreen extends Screen {
 	}
 	
 	protected BankAccountScreen() {
-		super(new StringTextComponent("Bank Account"));
+		super(new TranslationTextComponent("econ.bankAccount.title"));
 		
 		this.clientPlayer = Minecraft.getInstance().player;
 	}
@@ -235,7 +236,7 @@ public class BankAccountScreen extends Screen {
 		matrix.pushPose();
 		matrix.scale(2.0f, 2.0f, 2.0f);
 		
-		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + "\u20AC"), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
+		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
 
 //		drawCenteredString(matrix, this.font, mouseX + ", " + mouseY, mouseX / 2, mouseY / 2, Color.parseColor("#ffffff").getValue());
 //		drawCenteredString(matrix, this.font, (this.width / 2) + ", " + (this.height / 2 - guiHeight / 2 + 12), mouseX / 2, mouseY / 2 + 10, Color.parseColor("#ffffff").getValue());

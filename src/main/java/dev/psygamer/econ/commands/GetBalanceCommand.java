@@ -11,6 +11,8 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class GetBalanceCommand {
 	
@@ -38,7 +40,7 @@ public class GetBalanceCommand {
 			final long balance = BankAccountHandler.getBalance(target.getUUID());
 			
 			context.getSource().getEntity().sendMessage(
-					new StringTextComponent("Balance of " + target.getDisplayName().getString() + ": " + balance),
+					new TranslationTextComponent("econ.command.balance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL)),
 					context.getSource().getEntity().getUUID()
 			);
 			

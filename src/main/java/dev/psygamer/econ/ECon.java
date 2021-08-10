@@ -29,6 +29,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -54,7 +55,13 @@ public class ECon {
 	public static final String MODID = "econ";
 	public static final Logger LOGGER = LogManager.getLogger("eCon");
 	
-	public static final ITextComponent COMMAND_DISABLED_MESSAGE = new StringTextComponent(TextFormatting.RED + "The economy system is disabled in Single Player!");
+	public static final String MONEY_SYMBOL = new
+			TranslationTextComponent("econ.moneySymbol")
+			.getString();
+	public static final ITextComponent COMMAND_DISABLED_MESSAGE = new
+			TranslationTextComponent("econ.disabled")
+			.withStyle(TextFormatting.RED);
+	
 	
 	private static IProxy proxy;
 	

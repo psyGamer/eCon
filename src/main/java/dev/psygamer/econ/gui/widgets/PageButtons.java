@@ -23,10 +23,10 @@ public class PageButtons extends Widget {
 		
 		this.parent = parent;
 		
-		this.prevPage = new Button(x, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("< Prev"), button -> {
+		this.prevPage = new Button(x, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("\u00AB"), button -> {
 			PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() - 1);
 		});
-		this.nextPage = new Button(x + guiWidth / 2 + margin / 2, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("Next >"), button -> {
+		this.nextPage = new Button(x + guiWidth / 2 + margin / 2, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("\u00BB"), button -> {
 			PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() + 1);
 		});
 

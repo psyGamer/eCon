@@ -1,5 +1,6 @@
 package dev.psygamer.econ.item;
 
+import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -10,6 +11,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class MoneyItem extends Item {
@@ -30,7 +32,9 @@ public class MoneyItem extends Item {
 		player.awardStat(Stats.ITEM_USED.get(this));
 		player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.05f, 2f);
 		player.displayClientMessage(
-				new StringTextComponent(TextFormatting.GREEN + "Added " + (useEntireStack ? itemStack.getCount() + " x " : "") + this.value + "\u20AC to your balance"),
+				new TranslationTextComponent(useEntireStack ? "econ.moneyItem.useStack" : "econ.moneyItem.useSingle", useEntireStack ? String.valueOf(itemStack.getCount()) : "", this.value + ECon.MONEY_SYMBOL)
+						.withStyle(TextFormatting.GREEN),
+				
 				true
 		);
 		

@@ -1,6 +1,7 @@
 package dev.psygamer.econ.block;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import dev.psygamer.econ.ECon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -17,10 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
@@ -152,21 +150,21 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		matrixStack.scale(2 / 7f, 2 / 7f, 2 / 7f);
 		
 		final ITextComponent textComponent;
-		final Color textColor;
+		final int textColor;
 		
 		/*if (leftStock <= 0) { Only use once the text gets renderer properly
 			textComponent = new StringTextComponent("SOLD OUT");
 			textColor = Color.fromLegacyFormat(TextFormatting.RED);
 		} else*/
 		if (price <= 0) {
-			textComponent = new StringTextComponent("FREE");
-			textColor = Color.fromLegacyFormat(TextFormatting.GREEN);
+			textComponent = new TranslationTextComponent("store.econ.free");
+			textColor = Color.fromLegacyFormat(TextFormatting.GREEN).getValue();
 		} else {
-			textComponent = new StringTextComponent(price + "\u20AC");
-			textColor = Color.parseColor("#2B303D");
+			textComponent = new StringTextComponent(price + ECon.MONEY_SYMBOL);
+			textColor = 2830397;//Color.parseColor("#2B303D");
 		}
 		
-		font.drawInBatch(textComponent, 0, 0, textColor.getValue(),
+		font.drawInBatch(textComponent, 0, 0, textColor,
 				false, matrixStack.last().pose(), renderBuffer,
 				false, 0x00000000, lightLevel
 		);

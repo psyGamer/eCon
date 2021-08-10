@@ -17,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lwjgl.glfw.GLFW;
@@ -77,7 +74,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 				button -> this.quantityField.setValue(String.valueOf(parseInt(this.quantityField.getValue()) - 1))
 		);
 		
-		this.orderButton = new Button(this.width / 2 - 34, yPos + this.imageHeight - 30, 69, 20, new StringTextComponent("BUY"), button -> {
+		this.orderButton = new Button(this.width / 2 - 34, yPos + this.imageHeight - 30, 69, 20, new TranslationTextComponent("econ.store.buy").withStyle(TextFormatting.BOLD), button -> {
 			EConPacketHandler.INSTANCE.sendToServer(new StoreTransactionMessage(this.tileEntity.getBlockPos(), parseInt(this.quantityField.getValue())));
 			
 			this.onClose();
@@ -109,7 +106,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 		final int yPos = this.height / 2 - this.imageHeight / 2;
 		
 		final boolean isFree = this.tileEntity.getPrice() <= 0;
-		final String priceString = isFree ? "FREE" : this.tileEntity.getPrice() * parseInt(this.quantityField.getValue()) + "\u20AC";
+		final String priceString = isFree ? "FREE" : this.tileEntity.getPrice() * parseInt(this.quantityField.getValue()) + ECon.MONEY_SYMBOL;
 		
 		this.font.draw(matrix, "Total Price",
 				xPos + 6, yPos + 17,
@@ -147,9 +144,9 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 				leftInStockColor.getValue()
 		);
 		
-		final String storeName = this.tileEntity.getName().isEmpty() ? "Store" : this.tileEntity.getName();
+		final ITextComponent storeName = this.tileEntity.getName().isEmpty() ? new TranslationTextComponent("econ.store.title") : new StringTextComponent(this.tileEntity.getName());
 		
-		this.font.draw(matrix, new StringTextComponent(storeName),
+		this.font.draw(matrix, storeName,
 				this.width / 2f - (this.font.width(storeName) / 2f), this.height / 2f - this.imageHeight / 2f + 7,
 				
 				0x404040

@@ -2,6 +2,7 @@ package dev.psygamer.econ.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.gui.widgets.PlayerHead;
 import dev.psygamer.econ.gui.widgets.TextField;
@@ -17,6 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,7 +54,7 @@ public class NewTransactionScreen extends Screen {
 	private Button submitButton;
 	
 	protected NewTransactionScreen() {
-		super(new StringTextComponent("New Transaction"));
+		super(new TranslationTextComponent("econ.newTransaction.title"));
 	}
 	
 	@Override
@@ -79,7 +81,7 @@ public class NewTransactionScreen extends Screen {
 		this.playerNameInput = new TextField(this.font, xPos + 17, yPos + 64, 134, 20, 5, 3);
 		this.amountInput = new TextField(this.font, xPos + 17, yPos + 95, 134, 20, 5, 3);
 		this.submitButton = new Button(this.width / 2 - 67, this.height / 2 + 60, 134, 20,
-				new StringTextComponent("Process Transaction"), onPress -> {
+				new TranslationTextComponent("econ.newTransaction.process"), onPress -> {
 			
 			final UUID receivingUUID = getPlayerUUID();
 			final long amount = getAmount();
@@ -160,7 +162,7 @@ public class NewTransactionScreen extends Screen {
 				
 				Color.fromLegacyFormat(TextFormatting.YELLOW).getValue()
 		);
-		drawString(matrix, this.font, transferAmount + "\u20AC",
+		drawString(matrix, this.font, transferAmount + ECon.MONEY_SYMBOL,
 				
 				this.width / 2 - 27 + this.font.width("\u00BB "),
 				this.height / 2 + 22,
@@ -226,7 +228,7 @@ public class NewTransactionScreen extends Screen {
 		matrix.pushPose();
 		matrix.scale(2.0f, 2.0f, 2.0f);
 		
-		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + "\u20AC"), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
+		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
 		
 		matrix.popPose();
 		
