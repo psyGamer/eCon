@@ -120,6 +120,25 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 		handleUpdateTag(null, pkt.getTag());
 	}
 	
+	@Override
+	public void setChanged() {
+		this.stockLeft = this.getItems().stream()
+				.mapToInt(itemStack -> itemStack.getItem() == getOfferedItem().getItem() && ItemStack.tagMatches(itemStack, getOfferedItem()) ? itemStack.getCount() : 0)
+				.reduce(Integer::sum)
+				.orElse(0) - getOfferedItem().getCount();
+		
+		if (!getLevel().isClientSide())
+			this.getLevel().sendBlockUpdated(
+					this.getBlockPos(),
+					getLevel().getBlockState(getBlockPos()),
+					getLevel().getBlockState(getBlockPos()),
+					
+					Constants.BlockFlags.BLOCK_UPDATE
+			);
+		
+		super.setChanged();
+	}
+	
 	public NonNullList<ItemStack> getItems() {
 		return this.items;
 	}
