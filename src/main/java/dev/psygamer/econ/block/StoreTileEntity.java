@@ -1,13 +1,11 @@
 package dev.psygamer.econ.block;
 
-import com.google.common.collect.Lists;
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.setup.TileEntityTypeRegistry;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -22,6 +20,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 
@@ -144,27 +143,49 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	@Nonnull
 	@Override
 	public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
-		this.items.set(slot, stack);
+		final ItemStack itemStack = stack.copy();
+		final ItemStack remainingItemStack = stack.copy();
 		
-		if (stack.getCount() > stack.getMaxStackSize()) {
-			stack.setCount(stack.getMaxStackSize());
+		final int remainingStackSize = itemStack.getCount() - itemStack.getMaxStackSize();
+		
+		if (itemStack.getCount() > itemStack.getMaxStackSize()) {
+			itemStack.setCount(itemStack.getMaxStackSize());
 		}
 		
-		this.setChanged();
+		if (!simulate) {
+			this.items.set(slot, itemStack);
+			this.setChanged();
+		}
 		
-		return ItemStack.EMPTY;
+		if (remainingStackSize <= 0)
+			return ItemStack.EMPTY;
+		
+		remainingItemStack.setCount(remainingStackSize);
+		
+		return remainingItemStack;
 	}
 	
 	@Nonnull
 	@Override
 	public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
-		final ItemStack extractedStack = ItemStackHelper.removeItem(this.items, slot, amount);
+		final ItemStack itemStack = getStackInSlot(slot).copy();
+		final ItemStack extractedItemStack = getStackInSlot(slot).copy();
 		
-		if (!extractedStack.isEmpty()) {
+		final int extractedStackSize = Math.min(itemStack.getCount(), amount);
+		
+		itemStack.setCount(itemStack.getCount() - extractedStackSize);
+		
+		if (!simulate) {
+			this.items.set(slot, itemStack);
 			this.setChanged();
 		}
 		
-		return extractedStack;
+		if (extractedStackSize <= 0)
+			return ItemStack.EMPTY;
+		
+		extractedItemStack.setCount(extractedStackSize);
+		
+		return extractedItemStack;
 	}
 	
 	@Override
