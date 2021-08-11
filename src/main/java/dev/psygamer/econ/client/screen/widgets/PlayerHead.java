@@ -87,16 +87,9 @@ public class PlayerHead extends Widget {
 		nameCache.clear();
 		skinCache.clear();
 		
-		ECon.LOGGER.debug("UUIDs: " + playerUUIDs);
-		ECon.LOGGER.debug("BankAccounts: " + BankAccountHandler.bankAccountPlayerNames);
-		
 		for (final UUID playerUUID : playerUUIDs) {
-			ECon.LOGGER.debug("Caching name and skin of " + playerUUID);
-			
 			nameCache.put(playerUUID, getPlayerName(playerUUID));
 			skinCache.put(playerUUID, getSkinTexture(playerUUID));
-			
-			ECon.LOGGER.debug("Successfully cached Name: " + nameCache.get(playerUUID) + ", Skin: " + skinCache.get(playerUUID));
 		}
 	}
 	
@@ -124,7 +117,6 @@ public class PlayerHead extends Widget {
 				final String playerName = getPlayerName(playerUUID).get();
 				
 				final GameProfile profile = new GameProfile(playerUUID, playerName);
-				ECon.LOGGER.debug("Requesting skin of " + playerName + "[" + playerUUID + "]");
 				final PlayerProfile playerProfile = mojangAPI.getPlayerProfile(playerUUID.toString());
 				
 				final JSONObject json = new JSONObject();
@@ -178,13 +170,9 @@ public class PlayerHead extends Widget {
 					return fallbackSkinLocation;
 				}
 				
-				ECon.LOGGER.debug("Successfully requested skin of " + playerName + "[" + playerUUID + "]: " + skinLocationReference.get());
-				
 				return skinLocationReference.get();
 				
 			} catch (final RuntimeException | InterruptedException | ExecutionException ex) {
-				ECon.LOGGER.debug("Could not get skin of " + playerUUID);
-				
 				return fallbackSkinLocation;
 			}
 		});
@@ -211,16 +199,12 @@ public class PlayerHead extends Widget {
 					mojangAPI.connect();
 				}
 				
-				ECon.LOGGER.debug("Requesting name history of " + playerUUID);
-				
 				return mojangAPI.getNameHistoryOfPlayer(playerUUID.toString()).entrySet().stream()
 						.min((entryA, entryB) -> (int) (entryB.getValue() - entryA.getValue()))
 						.orElseThrow(RuntimeException::new)
 						.getKey();
 				
 			} catch (final RuntimeException ex) {
-				ECon.LOGGER.debug("Could not get name history of " + playerUUID);
-				
 				return fallbackName;
 			}
 		});

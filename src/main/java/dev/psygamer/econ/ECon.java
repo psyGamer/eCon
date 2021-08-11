@@ -52,7 +52,6 @@ import java.util.UUID;
 public class ECon {
 	
 	public static final String MODID = "econ";
-	public static final Logger LOGGER = LogManager.getLogger("eCon");
 	
 	public static final ITextComponent MONEY_SYMBOL = new
 			TranslationTextComponent("econ.moneySymbol");
@@ -143,12 +142,6 @@ public class ECon {
 			if (((ServerWorld) event.getWorld()).getServer().isSingleplayer()) {
 				return;
 			}
-			
-			LOGGER.info("---");
-			BankAccountWorldSavedData.get((ServerWorld) event.getWorld());
-			LOGGER.info("~~~");
-			TransactionWorldSavedData.get((ServerWorld) event.getWorld());
-			LOGGER.info("===");
 		}
 	}
 	

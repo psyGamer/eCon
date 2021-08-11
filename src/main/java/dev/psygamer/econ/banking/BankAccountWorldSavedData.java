@@ -30,7 +30,6 @@ public class BankAccountWorldSavedData extends WorldSavedData {
 			
 			final long balance = accountCompound.getLong("amount");
 			
-			ECon.LOGGER.info(playerUUID + "[" + playerName + "]: " + balance);
 			BankAccountHandler.registerBankAccount(playerUUID, playerName, balance);
 		}
 	}
