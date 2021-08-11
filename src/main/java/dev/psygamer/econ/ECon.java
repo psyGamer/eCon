@@ -142,6 +142,9 @@ public class ECon {
 			if (((ServerWorld) event.getWorld()).getServer().isSingleplayer()) {
 				return;
 			}
+			
+			BankAccountWorldSavedData.get((ServerWorld) event.getWorld());
+			TransactionWorldSavedData.get((ServerWorld) event.getWorld());
 		}
 	}
 	
