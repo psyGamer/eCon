@@ -31,13 +31,9 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 	
 	private final float rotationSpeed = 0.03f;
 	
-	private float rotation = 0.0f;
-	private float yTranslation = 0.0f;
-	
 	public StoreRenderer(final TileEntityRendererDispatcher dispatcher) {
 		super(dispatcher);
 	}
-	
 	
 	@Override
 	public void render(final StoreTileEntity tileEntity, final float partialTicks,
@@ -53,14 +49,14 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		final int lightLevel = getLightLevel(tileEntity.getLevel(), tileEntity.getBlockPos());
 		final Vector2f unitOffset = getUnitOffset(facingDirection);
 		
-		this.rotation = MathHelper.lerp(partialTicks, tileEntity.getItemRotation(), tileEntity.getPrevItemRotation());
-		this.yTranslation = (float) (Math.sin(Math.toRadians(this.rotation * 110)) * 0.05 + 0.05);
+		final float rotation = MathHelper.lerp(partialTicks, tileEntity.getItemRotation(), tileEntity.getPrevItemRotation());
+		final float yTranslation = (float) (Math.sin(Math.toRadians(rotation * 110)) * 0.05 + 0.05);
 		
 		renderItem(
 				matrix, tileEntity.getOfferedItem(), renderBuffer,
 				
-				new Vector3f(0.5f + unitOffset.x / 20f, 0.25f + this.yTranslation, 0.5f + unitOffset.y / 20f),
-				Vector3f.YP.rotation(this.rotation), 1.0f,
+				new Vector3f(0.5f + unitOffset.x / 20f, 0.25f + yTranslation, 0.5f + unitOffset.y / 20f),
+				Vector3f.YP.rotation(rotation), 1.0f,
 				
 				partialTicks, combinedLight, lightLevel
 		);
@@ -80,7 +76,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		matrix.pushPose();
 		matrix.scale(scale, scale, scale);
 		matrix.translate(translation.x(), translation.y(), translation.z());
-//		matrix.translate((1 - scale) / 2f, (1 - scale) / 2f, (1 - scale) / 2f);
+		
 		matrix.mulPose(rotation);
 		
 		this.itemRenderer.render(
@@ -136,8 +132,11 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		);
 		
 		// cos(22.5°) * h = 0.9238795325112867 * h
-		
-		matrixStack.translate(1.5f, font.lineHeight - 2.11f - 0.9238795325112867f * 2.3f, 2.3f / 2f);
+		matrixStack.translate(
+				1.5f,
+				font.lineHeight - 2.11f - 0.9238795325112867f * 2.3f,
+				2.3f / 2f
+		);
 		
 		
 		matrixStack.mulPose(
@@ -146,9 +145,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		matrixStack.mulPose(
 				Vector3f.ZP.rotationDegrees(rotation.z())
 		);
-//		matrixStack.translate(0, -5, 0);
-
-//		matrixStack.scale(scale, scale, scale);
+		
 		matrixStack.scale(2 / 7f, 2 / 7f, 2 / 7f);
 		
 		final ITextComponent textComponent;
@@ -230,9 +227,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 		matrixStack.mulPose(
 				Vector3f.ZP.rotationDegrees(rotation.z())
 		);
-//		matrixStack.translate(0, -5, 0);
-
-//		matrixStack.scale(scale, scale, scale);
+		
 		matrixStack.scale(1 / 5f, 1 / 5f, 1 / 5f);
 		
 		font.drawInBatch(new StringTextComponent(String.valueOf(stockLeft)), 0, 0, color,
