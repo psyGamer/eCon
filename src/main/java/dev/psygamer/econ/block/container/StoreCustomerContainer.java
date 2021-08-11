@@ -28,7 +28,7 @@ public class StoreCustomerContainer extends Container {
 	
 	public StoreCustomerContainer(final int windowId, final PlayerInventory playerInventory, final StoreTileEntity tileEntity) {
 		super(ContainerRegistry.STORE_CUSTOMER_CONTAINER.get(), windowId);
-//		playerInventory.player.openMenu(new ChestContainer())
+		
 		this.playerInventory = playerInventory;
 		this.tileEntity = tileEntity;
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());

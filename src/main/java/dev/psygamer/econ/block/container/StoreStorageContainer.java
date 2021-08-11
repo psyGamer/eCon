@@ -31,7 +31,6 @@ public class StoreStorageContainer extends Container {
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
 		
 		// When a slot gets added determines the index, not the 2nd parameter
-		
 		for (int row = 0 ; row < 3 ; row++) {
 			for (int col = 0 ; col < 9 ; col++) {
 				this.addSlot(new StoreStorageSlot(tileEntity,

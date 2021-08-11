@@ -34,7 +34,7 @@ public class StoreOwnerContainer extends Container {
 	
 	public StoreOwnerContainer(final int windowId, final PlayerInventory playerInventory, final StoreTileEntity tileEntity) {
 		super(ContainerRegistry.STORE_BLOCK_CONTAINER.get(), windowId);
-//		playerInventory.player.openMenu(new ChestContainer())
+		
 		this.playerInventory = playerInventory;
 		this.tileEntity = tileEntity;
 		this.canInteractWithCallable = IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos());
@@ -42,8 +42,8 @@ public class StoreOwnerContainer extends Container {
 		
 		this.fakeSlot.set(tileEntity.getOfferedItem());
 		
-		for (int row = 0 ; row < 3 ; row++) {
-			for (int col = 0 ; col < 9 ; col++) {
+		for (int col = 0 ; col < 9 ; col++) {
+			for (int row = 0 ; row < 3 ; row++) {
 				this.addSlot(new Slot(playerInventory,
 						col + row * 9 + 9,
 						col * 18 + 8,
@@ -96,7 +96,7 @@ public class StoreOwnerContainer extends Container {
 		}
 		
 		if (this.ownerScreen instanceof StoreOwnerScreen)
-			((StoreOwnerScreen) this.ownerScreen).onItemUpdate(slot.getItem());
+			this.ownerScreen.onItemUpdate(slot.getItem());
 		
 		return player.inventory.getCarried();
 	}
@@ -131,24 +131,6 @@ public class StoreOwnerContainer extends Container {
 		final Slot slot = this.slots.get(index);
 		
 		return ItemStack.EMPTY;
-
-//		if (slot != null && slot.hasItem()) {
-//			final ItemStack itemStack = slot.getItem();
-//
-//			if ((index < StoreTileEntity.SLOTS && !this.moveItemStackTo(itemStack, StoreTileEntity.SLOTS, this.slots.size(), true)) ||
-//					!this.moveItemStackTo(itemStack, 0, StoreTileEntity.SLOTS, false)
-//			) {
-//				return ItemStack.EMPTY;
-//			}
-//
-//			if (itemStack.isEmpty()) {
-//				slot.set(ItemStack.EMPTY);
-//			} else {
-//				slot.setChanged();
-//			}
-//		}
-//
-//		return ItemStack.EMPTY;
 	}
 	
 	public PlayerInventory getPlayerInventory() {
