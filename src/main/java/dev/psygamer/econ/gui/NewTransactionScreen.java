@@ -162,7 +162,7 @@ public class NewTransactionScreen extends Screen {
 				
 				Color.fromLegacyFormat(TextFormatting.YELLOW).getValue()
 		);
-		drawString(matrix, this.font, transferAmount + ECon.MONEY_SYMBOL,
+		drawString(matrix, this.font, transferAmount + ECon.MONEY_SYMBOL.getString(),
 				
 				this.width / 2 - 27 + this.font.width("\u00BB "),
 				this.height / 2 + 22,
@@ -228,7 +228,7 @@ public class NewTransactionScreen extends Screen {
 		matrix.pushPose();
 		matrix.scale(2.0f, 2.0f, 2.0f);
 		
-		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
+		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL.getString()), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
 		
 		matrix.popPose();
 		

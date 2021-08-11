@@ -5,6 +5,7 @@ import dev.psygamer.econ.ECon;
 
 
 import dev.psygamer.econ.network.EConPacketHandler;
+import dev.psygamer.econ.network.server.StoreOwnerMessage;
 import dev.psygamer.econ.network.server.StoreSetupContainerMessage;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -52,6 +53,15 @@ public class StoreStorageScreen extends ContainerScreen<StoreStorageContainer> {
 		);
 		
 		super.init();
+	}
+	
+	@Override
+	public void onClose() {
+		EConPacketHandler.INSTANCE.sendToServer(
+				new StoreOwnerMessage(this.menu.getTileEntity())
+		);
+		
+		super.onClose();
 	}
 	
 	@Override

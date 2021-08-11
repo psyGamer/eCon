@@ -106,7 +106,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 		final int yPos = this.height / 2 - this.imageHeight / 2;
 		
 		final boolean isFree = this.tileEntity.getPrice() <= 0;
-		final String priceString = isFree ? "FREE" : this.tileEntity.getPrice() * parseInt(this.quantityField.getValue()) + ECon.MONEY_SYMBOL;
+		final String priceString = isFree ? "FREE" : this.tileEntity.getPrice() * parseInt(this.quantityField.getValue()) + ECon.MONEY_SYMBOL.getString();
 		
 		this.font.draw(matrix, "Total Price",
 				xPos + 6, yPos + 17,

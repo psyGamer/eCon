@@ -65,11 +65,11 @@ public class PayCommand {
 			);
 			
 			player.sendMessage(
-					new TranslationTextComponent("econ.command.sent", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL), target.getDisplayName().getString()),
+					new TranslationTextComponent("econ.command.sent", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL.getString()), target.getDisplayName().getString()),
 					player.getUUID()
 			);
 			target.sendMessage(
-					new TranslationTextComponent("econ.command.received", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL), player.getDisplayName().getString()),
+					new TranslationTextComponent("econ.command.received", TextFormatting.BOLD + (amount + ECon.MONEY_SYMBOL.getString()), player.getDisplayName().getString()),
 					player.getUUID()
 			);
 			

@@ -160,7 +160,7 @@ public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 			textComponent = new TranslationTextComponent("store.econ.free");
 			textColor = Color.fromLegacyFormat(TextFormatting.GREEN).getValue();
 		} else {
-			textComponent = new StringTextComponent(price + ECon.MONEY_SYMBOL);
+			textComponent = new StringTextComponent(price + ECon.MONEY_SYMBOL.getString());
 			textColor = 2830397;//Color.parseColor("#2B303D");
 		}
 		

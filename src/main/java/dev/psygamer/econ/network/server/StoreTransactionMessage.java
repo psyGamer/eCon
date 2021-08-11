@@ -63,6 +63,8 @@ public class StoreTransactionMessage {
 				
 				final ItemStack offeredItem = storeTileEntity.getOfferedItem();
 				
+				storeTileEntity.recalculateLeftStock();
+				
 				if (this.quantity * offeredItem.getCount() > storeTileEntity.getLeftStock()) return;
 				
 				final Transaction storeTransaction = new Transaction(serverPlayer.getUUID(), storeTileEntity.getOwner(), price, Instant.now().getEpochSecond());

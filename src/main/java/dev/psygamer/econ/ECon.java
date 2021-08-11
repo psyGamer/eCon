@@ -55,9 +55,9 @@ public class ECon {
 	public static final String MODID = "econ";
 	public static final Logger LOGGER = LogManager.getLogger("eCon");
 	
-	public static final String MONEY_SYMBOL = new
-			TranslationTextComponent("econ.moneySymbol")
-			.getString();
+	public static final ITextComponent MONEY_SYMBOL = new
+			TranslationTextComponent("econ.moneySymbol");
+	
 	public static final ITextComponent COMMAND_DISABLED_MESSAGE = new
 			TranslationTextComponent("econ.disabled")
 			.withStyle(TextFormatting.RED);

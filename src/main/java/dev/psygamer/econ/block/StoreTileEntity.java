@@ -4,6 +4,7 @@ import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.setup.TileEntityTypeRegistry;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -111,6 +112,11 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 		load(state, tag);
 		
 		this.stockLeft = tag.getInt("stockLeft");
+		
+		final Container openMenu = Minecraft.getInstance().player.containerMenu;
+		
+		if (openMenu instanceof StoreCustomerContainer)
+			((StoreCustomerContainer) openMenu).getPreviewSlot().set(this.getOfferedItem());
 	}
 	
 	@Nullable
@@ -126,10 +132,7 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	
 	@Override
 	public void setChanged() {
-		this.stockLeft = this.getItems().stream()
-				.mapToInt(itemStack -> itemStack.getItem() == getOfferedItem().getItem() && ItemStack.tagMatches(itemStack, getOfferedItem()) ? itemStack.getCount() : 0)
-				.reduce(Integer::sum)
-				.orElse(0) - getOfferedItem().getCount();
+		recalculateLeftStock();
 		
 		if (!getLevel().isClientSide())
 			this.getLevel().sendBlockUpdated(
@@ -142,6 +145,7 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 		
 		super.setChanged();
 	}
+	
 	
 	public NonNullList<ItemStack> getItems() {
 		return this.items;
@@ -260,6 +264,13 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	
 	public float getPrevItemRotation() {
 		return this.prevItemRotation;
+	}
+	
+	public void recalculateLeftStock() {
+		this.stockLeft = this.getItems().stream()
+				.mapToInt(itemStack -> itemStack.getItem() == getOfferedItem().getItem() && ItemStack.tagMatches(itemStack, getOfferedItem()) ? itemStack.getCount() : 0)
+				.reduce(Integer::sum)
+				.orElse(0) - getOfferedItem().getCount();
 	}
 	
 	public void setLeftStock(final int leftStock) {

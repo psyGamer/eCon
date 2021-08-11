@@ -236,7 +236,7 @@ public class BankAccountScreen extends Screen {
 		matrix.pushPose();
 		matrix.scale(2.0f, 2.0f, 2.0f);
 		
-		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
+		drawCenteredString(matrix, this.font, TextFormatting.BOLD + (BankAccountHandler.clientBankAccount.getBalance() + ECon.MONEY_SYMBOL.getString()), this.width / 4, this.height / 4 - guiHeight / 4 + 12, Color.fromLegacyFormat(TextFormatting.GOLD).getValue());
 
 //		drawCenteredString(matrix, this.font, mouseX + ", " + mouseY, mouseX / 2, mouseY / 2, Color.parseColor("#ffffff").getValue());
 //		drawCenteredString(matrix, this.font, (this.width / 2) + ", " + (this.height / 2 - guiHeight / 2 + 12), mouseX / 2, mouseY / 2 + 10, Color.parseColor("#ffffff").getValue());

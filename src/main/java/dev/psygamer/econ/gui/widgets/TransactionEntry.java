@@ -89,7 +89,7 @@ public class TransactionEntry extends Widget {
 				Color.fromLegacyFormat(this.isReceivingMoney ? TextFormatting.GREEN : TextFormatting.RED).getValue()
 		);
 		
-		drawString(matrix, this.fontRenderer, this.transaction.getTransferAmount() + ECon.MONEY_SYMBOL,
+		drawString(matrix, this.fontRenderer, this.transaction.getTransferAmount() + ECon.MONEY_SYMBOL.getString(),
 				
 				this.x + 33 + this.fontRenderer.width("\u00BB "),
 				this.y + guiHeight / 2 - 8,

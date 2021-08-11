@@ -12,7 +12,7 @@
 
 	"itemGroup.economy": "eCon",
 
-	"econ.moneySymbol": "€",
+	"econ.moneySymbol": "\u20AC",
 	"econ.disabled": "The economy system is disabled in Single Player!",
 
 	"econ.command.balance": "%s has a balance of %s",

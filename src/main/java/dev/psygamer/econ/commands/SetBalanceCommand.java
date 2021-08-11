@@ -45,7 +45,7 @@ public class SetBalanceCommand {
 			BankAccountHandler.setBalance(target.getUUID(), balance);
 			
 			context.getSource().getServer().getPlayerList().broadcastMessage(
-					new TranslationTextComponent("econ.command.setBalance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL)),
+					new TranslationTextComponent("econ.command.setBalance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL.getString())),
 					ChatType.CHAT,
 					context.getSource().getEntity().getUUID()
 			);

@@ -40,7 +40,7 @@ public class GetBalanceCommand {
 			final long balance = BankAccountHandler.getBalance(target.getUUID());
 			
 			context.getSource().getEntity().sendMessage(
-					new TranslationTextComponent("econ.command.balance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL)),
+					new TranslationTextComponent("econ.command.balance", target.getDisplayName().getString(), TextFormatting.BOLD + (balance + ECon.MONEY_SYMBOL.getString())),
 					context.getSource().getEntity().getUUID()
 			);
 			

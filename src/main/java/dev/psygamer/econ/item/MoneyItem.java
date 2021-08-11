@@ -32,7 +32,7 @@ public class MoneyItem extends Item {
 		player.awardStat(Stats.ITEM_USED.get(this));
 		player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.05f, 2f);
 		player.displayClientMessage(
-				new TranslationTextComponent(useEntireStack ? "econ.moneyItem.useStack" : "econ.moneyItem.useSingle", useEntireStack ? String.valueOf(itemStack.getCount()) : "", this.value + ECon.MONEY_SYMBOL)
+				new TranslationTextComponent(useEntireStack ? "econ.moneyItem.useStack" : "econ.moneyItem.useSingle", useEntireStack ? String.valueOf(itemStack.getCount()) : "", this.value + ECon.MONEY_SYMBOL.getString())
 						.withStyle(TextFormatting.GREEN),
 				
 				true
