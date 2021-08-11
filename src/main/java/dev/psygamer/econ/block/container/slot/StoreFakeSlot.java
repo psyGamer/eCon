@@ -1,7 +1,6 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.block.container.slot;
 
-import dev.psygamer.econ.network.EConPacketHandler;
-import dev.psygamer.econ.network.server.StoreOwnerMessage;
+import dev.psygamer.econ.block.container.StoreOwnerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -12,9 +11,9 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class StoreFakeSlot extends SlotItemHandler {
 	
-	private final StoreContainer parentContainer;
+	private final StoreOwnerContainer parentContainer;
 	
-	public StoreFakeSlot(final StoreContainer parentContainer, final IItemHandler itemHandler, final int slotIndex, final int xPosition, final int yPosition) {
+	public StoreFakeSlot(final StoreOwnerContainer parentContainer, final IItemHandler itemHandler, final int slotIndex, final int xPosition, final int yPosition) {
 		super(itemHandler, slotIndex, xPosition, yPosition);
 		
 		this.parentContainer = parentContainer;

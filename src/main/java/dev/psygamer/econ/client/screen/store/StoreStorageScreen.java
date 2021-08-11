@@ -1,9 +1,10 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.client.screen.store;
 
 
 import dev.psygamer.econ.ECon;
 
 
+import dev.psygamer.econ.block.container.StoreStorageContainer;
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.StoreOwnerMessage;
 import dev.psygamer.econ.network.server.StoreSetupContainerMessage;

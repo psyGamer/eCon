@@ -1,7 +1,7 @@
 package dev.psygamer.econ.network.server;
 
-import dev.psygamer.econ.block.StoreContainer;
-import dev.psygamer.econ.block.StoreTileEntity;
+import dev.psygamer.econ.block.container.StoreOwnerContainer;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -55,7 +55,7 @@ public class StoreSetupContainerMessage {
 				@Nullable
 				@Override
 				public Container createMenu(final int windowID, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
-					return new StoreContainer(windowID, playerInventory, (StoreTileEntity) tileEntity);
+					return new StoreOwnerContainer(windowID, playerInventory, (StoreTileEntity) tileEntity);
 				}
 			};
 			

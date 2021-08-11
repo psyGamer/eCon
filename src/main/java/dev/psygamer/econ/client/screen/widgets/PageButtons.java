@@ -1,7 +1,7 @@
-package dev.psygamer.econ.gui.widgets;
+package dev.psygamer.econ.client.screen.widgets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import dev.psygamer.econ.gui.BankAccountScreen;
+import dev.psygamer.econ.client.screen.BankAccountScreen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.StringTextComponent;

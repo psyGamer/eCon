@@ -2,7 +2,6 @@ package dev.psygamer.econ.network;
 
 import dev.psygamer.econ.ECon;
 
-import dev.psygamer.econ.block.StoreContainer;
 import dev.psygamer.econ.network.client.BankAccountMessage;
 import dev.psygamer.econ.network.client.NewTransactionMessage;
 import dev.psygamer.econ.network.client.RegisteredBankAccountsMessage;

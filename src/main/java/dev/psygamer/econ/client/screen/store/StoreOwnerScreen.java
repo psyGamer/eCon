@@ -1,9 +1,13 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.client.screen.store;
 
 import dev.psygamer.econ.ECon;
 
-import dev.psygamer.econ.gui.widgets.ImageButton;
-import dev.psygamer.econ.gui.widgets.TextField;
+import dev.psygamer.econ.block.container.slot.StoreFakeSlot;
+import dev.psygamer.econ.block.container.slot.StoreStorageSlot;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
+import dev.psygamer.econ.block.container.StoreOwnerContainer;
+import dev.psygamer.econ.client.screen.widgets.ImageButton;
+import dev.psygamer.econ.client.screen.widgets.TextField;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -28,7 +32,7 @@ import org.lwjgl.glfw.GLFW;
 import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
+public class StoreOwnerScreen extends ContainerScreen<StoreOwnerContainer> {
 	
 	private static final ResourceLocation STORE_LOCATION = new ResourceLocation(ECon.MODID, "textures/gui/store_gui.png");
 	
@@ -44,7 +48,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreContainer> {
 	
 	private final StoreTileEntity tileEntity;
 	
-	public StoreOwnerScreen(final StoreContainer container, final PlayerInventory playerInventory, final ITextComponent title) {
+	public StoreOwnerScreen(final StoreOwnerContainer container, final PlayerInventory playerInventory, final ITextComponent title) {
 		super(container, playerInventory, title);
 		
 		this.menu.setOwnerScreen(this);

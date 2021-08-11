@@ -1,10 +1,11 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.block.container;
 
+import dev.psygamer.econ.block.StoreBlock;
+import dev.psygamer.econ.block.container.slot.StoreStorageSlot;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import dev.psygamer.econ.setup.ContainerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;

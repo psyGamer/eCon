@@ -1,10 +1,9 @@
-package dev.psygamer.econ.gui;
+package dev.psygamer.econ.client.screen;
 
 import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.gui.widgets.NewTransactionButton;
-import dev.psygamer.econ.gui.widgets.PageButtons;
-import dev.psygamer.econ.gui.widgets.ScrollBar;
-import dev.psygamer.econ.gui.widgets.TransactionEntry;
+import dev.psygamer.econ.client.screen.widgets.PageButtons;
+import dev.psygamer.econ.client.screen.widgets.ScrollBar;
+import dev.psygamer.econ.client.screen.widgets.TransactionEntry;
 import dev.psygamer.econ.client.KeybindingsRegistry;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
@@ -16,7 +15,6 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Color;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.client.Minecraft;
@@ -30,7 +28,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

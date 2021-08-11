@@ -1,7 +1,7 @@
 package dev.psygamer.econ.setup;
 
 import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.block.StoreTileEntity;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 
 import net.minecraft.tileentity.TileEntityType;
 

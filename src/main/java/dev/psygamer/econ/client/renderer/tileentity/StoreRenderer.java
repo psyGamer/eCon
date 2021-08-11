@@ -1,7 +1,9 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.client.renderer.tileentity;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.block.StoreBlock;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

@@ -1,10 +1,9 @@
-package dev.psygamer.econ.gui.widgets;
+package dev.psygamer.econ.client.screen.widgets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.util.text.Color;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;

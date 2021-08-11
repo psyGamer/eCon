@@ -1,8 +1,11 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.block.container;
 
+import dev.psygamer.econ.block.StoreBlock;
+import dev.psygamer.econ.block.container.slot.StoreFakeSlot;
+import dev.psygamer.econ.client.screen.store.StoreOwnerScreen;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import dev.psygamer.econ.setup.ContainerRegistry;
 
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -15,7 +18,7 @@ import net.minecraft.util.IWorldPosCallable;
 
 import java.util.Objects;
 
-public class StoreContainer extends Container {
+public class StoreOwnerContainer extends Container {
 	
 	private StoreOwnerScreen ownerScreen;
 	
@@ -25,11 +28,11 @@ public class StoreContainer extends Container {
 	
 	private final StoreFakeSlot fakeSlot;
 	
-	public StoreContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public StoreOwnerContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
 		this(windowId, playerInventory, getTileEntity(playerInventory, data));
 	}
 	
-	public StoreContainer(final int windowId, final PlayerInventory playerInventory, final StoreTileEntity tileEntity) {
+	public StoreOwnerContainer(final int windowId, final PlayerInventory playerInventory, final StoreTileEntity tileEntity) {
 		super(ContainerRegistry.STORE_BLOCK_CONTAINER.get(), windowId);
 //		playerInventory.player.openMenu(new ChestContainer())
 		this.playerInventory = playerInventory;

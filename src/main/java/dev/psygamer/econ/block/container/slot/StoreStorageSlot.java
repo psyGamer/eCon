@@ -1,4 +1,4 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.block.container.slot;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;

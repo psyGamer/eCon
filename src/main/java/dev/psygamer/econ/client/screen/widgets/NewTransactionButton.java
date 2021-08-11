@@ -1,4 +1,4 @@
-package dev.psygamer.econ.gui.widgets;
+package dev.psygamer.econ.client.screen.widgets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;

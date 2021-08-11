@@ -1,7 +1,7 @@
 package dev.psygamer.econ.network.server;
 
-import dev.psygamer.econ.block.StoreStorageContainer;
-import dev.psygamer.econ.block.StoreTileEntity;
+import dev.psygamer.econ.block.container.StoreStorageContainer;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;

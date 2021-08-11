@@ -1,38 +1,25 @@
-package dev.psygamer.econ.gui.widgets;
+package dev.psygamer.econ.client.screen.widgets;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.properties.Property;
 import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.banking.BankAccount;
-import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
-import dev.psygamer.econ.gui.BankAccountScreen;
+import dev.psygamer.econ.client.screen.BankAccountScreen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import net.minecraftforge.client.MinecraftForgeClient;
-import org.json.simple.JSONObject;
-import org.shanerx.mojang.Mojang;
-import org.shanerx.mojang.PlayerProfile;
 
 import java.util.*;
 import java.time.Instant;
 import java.text.DateFormat;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 public class TransactionEntry extends Widget {
 	

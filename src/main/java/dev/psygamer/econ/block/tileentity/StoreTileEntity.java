@@ -1,6 +1,8 @@
-package dev.psygamer.econ.block;
+package dev.psygamer.econ.block.tileentity;
 
 import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.block.container.StoreOwnerContainer;
+import dev.psygamer.econ.block.container.StoreCustomerContainer;
 import dev.psygamer.econ.setup.TileEntityTypeRegistry;
 
 import net.minecraft.block.BlockState;
@@ -93,7 +95,7 @@ public class StoreTileEntity extends TileEntity implements IItemHandlerModifiabl
 	@Override
 	public Container createMenu(final int windowID, final PlayerInventory playerInventory, final PlayerEntity playerEntity) {
 		if (playerEntity.getUUID().equals(this.owner))
-			return new StoreContainer(windowID, playerInventory, this);
+			return new StoreOwnerContainer(windowID, playerInventory, this);
 		
 		return new StoreCustomerContainer(windowID, playerInventory, this);
 	}

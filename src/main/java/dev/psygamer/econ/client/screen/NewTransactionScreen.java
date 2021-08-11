@@ -1,11 +1,11 @@
-package dev.psygamer.econ.gui;
+package dev.psygamer.econ.client.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.banking.BankAccountHandler;
-import dev.psygamer.econ.gui.widgets.PlayerHead;
-import dev.psygamer.econ.gui.widgets.TextField;
+import dev.psygamer.econ.client.screen.widgets.PlayerHead;
+import dev.psygamer.econ.client.screen.widgets.TextField;
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.TransactionMessage;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,6 @@ import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.Color;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;

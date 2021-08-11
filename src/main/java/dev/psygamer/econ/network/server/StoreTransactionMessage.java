@@ -3,7 +3,7 @@ package dev.psygamer.econ.network.server;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
-import dev.psygamer.econ.block.StoreTileEntity;
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
