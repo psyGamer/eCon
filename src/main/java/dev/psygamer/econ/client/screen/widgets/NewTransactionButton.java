@@ -30,8 +30,7 @@ public class NewTransactionButton extends Button {
 		final FontRenderer fontrenderer = minecraft.font;
 		
 		minecraft.getTextureManager().bind(WIDGETS_LOCATION);
-
-//		RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+		
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();

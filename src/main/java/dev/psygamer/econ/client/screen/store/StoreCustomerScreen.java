@@ -239,8 +239,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 			
 			if (scale == 2.0f) {
 				RenderSystem.scalef(scale, scale, scale);
-				RenderSystem.translatef(slot.x / -scale, slot.y / -scale, (this.itemRenderer.blitOffset + 300) / -2f); // idk why 101 but i works lol
-//				RenderSystem.tra
+				RenderSystem.translatef(slot.x / -scale, slot.y / -scale, (this.itemRenderer.blitOffset + 300) / -2f);
 			}
 			
 			if (slot.isActive()) {
@@ -298,7 +297,7 @@ public class StoreCustomerScreen extends ContainerScreen<StoreCustomerContainer>
 			final int l1 = this.snapbackStartX + (int) ((float) l2 * f);
 			final int i2 = this.snapbackStartY + (int) ((float) i3 * f);
 			
-			this.renderFloatingItem(this.snapbackItem, l1, i2, (String) null);
+			this.renderFloatingItem(this.snapbackItem, l1, i2, null);
 		}
 		
 		RenderSystem.popMatrix();

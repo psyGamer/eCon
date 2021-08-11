@@ -61,10 +61,6 @@ public class TransactionEntry extends Widget {
 	@Override
 	public void render(final MatrixStack matrix, final int mouseX, final int mouseY, final float partialTicks) {
 		super.render(matrix, mouseX, mouseY, partialTicks);
-
-//		Minecraft.getInstance().getTextureManager().bind(BankAccountScreen.BANK_ACCOUNT_LOCATION);
-//
-//		AbstractGui.blit(matrix, this.x + 2, this.y + 2, 166, 41, 25, 25, 512, 256);
 		
 		this.playerHead.render(matrix, mouseX, mouseY, partialTicks);
 		
@@ -83,18 +79,13 @@ public class TransactionEntry extends Widget {
 				
 				Color.fromLegacyFormat(this.isReceivingMoney ? TextFormatting.GREEN : TextFormatting.RED).getValue()
 		);
-
-//		matrix.pushPose();
-//		matrix.scale(0.5f, 0.5f, 0.5f);
 		
 		drawCenteredString(matrix, this.fontRenderer, this.dateTimeString,
 				this.x + 73,
 				this.y + guiHeight - this.fontRenderer.lineHeight - 4,
 				
-				8947848//Color.parseColor("#888888").getValue()
+				8947848 // #888888
 		);
-
-//		matrix.popPose();
 	}
 	
 	@Override

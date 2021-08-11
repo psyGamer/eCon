@@ -164,23 +164,7 @@ public class StoreOwnerScreen extends ContainerScreen<StoreOwnerContainer> {
 	@Override
 	public void render(final MatrixStack matrix, final int mouseX, final int mouseY, final float partialTicks) {
 		renderBackground(matrix);
-//		renderFakeSlot(matrix);
-
-//		final int slotX = this.width / 2 - this.imageWidth / 2 + this.menu.getFakeSlot().x;
-//		final int slotY = this.height / 2 - this.imageHeight / 2 + this.menu.getFakeSlot().y;
-
-//		if (mouseX >= slotX && mouseX <= slotX + 32 && mouseY >= slotY && mouseY <= slotY + 32) {
-//			AbstractGui.fill(matrix, slotX + 16, slotY, slotX + 32, slotY + 16, 0x80FFFFFF);
-//			AbstractGui.fill(matrix, slotX, slotY + 16, slotX + 32, slotY + 32, 0x80FFFFFF);
-//			if (!(mouseX >= slotX && mouseX <= slotX + 16 && mouseY >= slotY && mouseY <= slotY + 16)) {
-//				AbstractGui.fill(matrix, slotX, slotY, slotX + 16, slotY + 16, 0x80FFFFFF);
-//
-//				renderTooltip(matrix, this.menu.getFakeSlot().getItem(), mouseX, mouseY);
-//			}
-//		}
-		
 		renderSlots(matrix, mouseX, mouseY, partialTicks);
-//		super.render(matrix, mouseX, mouseY, partialTicks);
 		renderTooltip(matrix, mouseX, mouseY);
 		
 		this.storageButton.render(matrix, mouseX, mouseY, partialTicks);
@@ -303,103 +287,11 @@ public class StoreOwnerScreen extends ContainerScreen<StoreOwnerContainer> {
 			final int l1 = this.snapbackStartX + (int) ((float) l2 * f);
 			final int i2 = this.snapbackStartY + (int) ((float) i3 * f);
 			
-			this.renderFloatingItem(this.snapbackItem, l1, i2, (String) null);
+			this.renderFloatingItem(this.snapbackItem, l1, i2, null);
 		}
 		
 		RenderSystem.popMatrix();
 		RenderSystem.enableDepthTest();
-	}
-
-//	@Override
-//	public void renderSlot(final MatrixStack matrix, final Slot slot) {
-//		if (slot instanceof StoreFakeSlot) {
-//			return;
-//		}
-//
-//		super.renderSlot(matrix, slot);
-
-//		final ItemStack carriedItem = this.minecraft.player.inventory.getCarried();
-//		ItemStack slotItem = slot.getItem();
-//
-//		boolean flag = false;
-//		boolean flag1 = slot == this.clickedSlot && !this.draggingItem.isEmpty() && !this.isSplittingStack;
-//		String s = null;
-//
-//		if (slot == this.clickedSlot && !this.draggingItem.isEmpty() && this.isSplittingStack && !slotItem.isEmpty()) {
-//			slotItem = slotItem.copy();
-//			slotItem.setCount(slotItem.getCount() / 2);
-//		} else if (this.isQuickCrafting && this.quickCraftSlots.contains(slot) && !carriedItem.isEmpty()) {
-//			if (this.quickCraftSlots.size() == 1) {
-//				return;
-//			}
-//
-//			if (Container.canItemQuickReplace(slot, carriedItem, true) && this.menu.canDragTo(slot)) {
-//				slotItem = carriedItem.copy();
-//				flag = true;
-//				Container.getQuickCraftSlotCount(this.quickCraftSlots, this.quickCraftingType, slotItem, slot.getItem().isEmpty() ? 0 : slot.getItem().getCount());
-//				final int k = Math.min(slotItem.getMaxStackSize(), slot.getMaxStackSize(slotItem));
-//				if (slotItem.getCount() > k) {
-//					s = TextFormatting.YELLOW.toString() + k;
-//					slotItem.setCount(k);
-//				}
-//			} else {
-//				this.quickCraftSlots.remove(slot);
-//				this.recalculateQuickCraftRemaining();
-//			}
-//		}
-//
-//		this.setBlitOffset(100);
-//		this.itemRenderer.blitOffset = 100.0F;
-//		if (slotItem.isEmpty() && slot.isActive()) {
-//			final Pair<ResourceLocation, ResourceLocation> pair = slot.getNoItemIcon();
-//			if (pair != null) {
-//				final TextureAtlasSprite textureatlassprite = this.minecraft.getTextureAtlas(pair.getFirst()).apply(pair.getSecond());
-//				this.minecraft.getTextureManager().bind(textureatlassprite.atlas().location());
-//				blit(matrix, slot.x, slot.y, this.getBlitOffset(), 16, 16, textureatlassprite);
-//				flag1 = true;
-//			}
-//		}
-//
-//		if (!flag1) {
-//			if (flag) {
-//				AbstractGui.fill(matrix, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x80FFFFFF);
-//			}
-//
-////			RenderSystem.enableDepthTest();
-//			RenderSystem.pushMatrix();
-//
-//			if (slot instanceof StoreFakeSlot) {
-//				RenderSystem.scalef(2.0f, 2.0f, 2.0f);
-//				RenderSystem.translatef(slot.x / -2f, slot.y / -2f, 0);
-//			}
-//
-//			this.itemRenderer.renderAndDecorateItem(this.minecraft.player, slotItem, slot.x, slot.y);
-//			this.itemRenderer.renderGuiItemDecorations(this.font, slotItem, slot.x, slot.y, s);
-//
-//			RenderSystem.popMatrix();
-//		}
-//
-//		this.itemRenderer.blitOffset = 0.0F;
-//		this.setBlitOffset(0);
-//	}
-	
-	@Deprecated
-	private void renderFakeSlot(final MatrixStack matrixStack) {
-		final StoreFakeSlot slot = this.menu.getFakeSlot();
-		final ItemStack slotItem = slot.getItem();
-		final String quantityString = slotItem.getCount() == 0 ? "" : String.valueOf(slotItem.getCount());
-		
-		final int xPos = this.width / 2 - this.imageWidth / 2 + slot.x;
-		final int yPos = this.height / 2 - this.imageHeight / 2 + slot.y;
-		
-		RenderSystem.pushMatrix();
-		RenderSystem.scalef(2.0f, 2.0f, 2.0f);
-		RenderSystem.translatef(xPos / -2f, yPos / -2f, 0);
-		
-		this.itemRenderer.renderAndDecorateItem(this.minecraft.player, slotItem, xPos, yPos);
-		this.itemRenderer.renderGuiItemDecorations(this.font, slotItem, xPos, yPos, quantityString);
-		
-		RenderSystem.popMatrix();
 	}
 	
 	@Override

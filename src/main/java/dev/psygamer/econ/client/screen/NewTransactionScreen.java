@@ -168,44 +168,6 @@ public class NewTransactionScreen extends Screen {
 				
 				Color.fromLegacyFormat(TextFormatting.YELLOW).getValue()
 		);
-
-//		final int off = 10;
-//
-//		drawString(matrix, this.font, accountBalance + "\u20AC",
-//
-//				this.width / 2 - this.font.width(String.valueOf(accountBalance)) / 2,
-//				this.height / 2 + 45 + off,
-//
-//				Color.fromLegacyFormat(TextFormatting.DARK_GREEN).getValue()
-//		);
-//		drawString(matrix, this.font, "-",
-//
-//				this.width / 2 - this.font.width("-") - this.font.width(String.valueOf(accountBalance)) / 2 - 1,
-//				this.height / 2 + 55 + off,
-//
-//				Color.fromLegacyFormat(TextFormatting.DARK_RED).getValue()
-//		);
-//		drawString(matrix, this.font, transferAmount + "\u20AC",
-//
-//				this.width / 2 + this.font.width(String.valueOf(accountBalance)) / 2 - this.font.width(String.valueOf(transferAmount)),
-//				this.height / 2 + 55 + off,
-//
-//				Color.fromLegacyFormat(TextFormatting.DARK_RED).getValue()
-//		);
-//
-//		AbstractGui.fill(matrix,
-//				this.width / 2 - this.font.width(String.valueOf(accountBalance)) / 2, this.height / 2 + 66 + off,
-//				this.width / 2 + this.font.width(String.valueOf(accountBalance)) / 2, this.height / 2 + 67 + off,
-//
-//				Color.fromLegacyFormat(TextFormatting.GOLD).getValue() + 0xFF000000
-//		);
-//		drawString(matrix, this.font, (accountBalance - transferAmount) + "\u20AC",
-//
-//				this.width / 2 + this.font.width(String.valueOf(accountBalance)) / 2 - this.font.width(String.valueOf(accountBalance - transferAmount)),
-//				this.height / 2 + 70 + off,
-//
-//				Color.fromLegacyFormat(TextFormatting.GOLD).getValue()
-//		);
 		
 		this.font.draw(matrix, "Make Transaction",
 				this.width / 2f - (this.font.width("Make Transaction") / 2f), this.height / 2f - guiHeight / 2f + 7,

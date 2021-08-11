@@ -5,25 +5,25 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.properties.Property;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.banking.BankAccountHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.play.NetworkPlayerInfo;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.play.NetworkPlayerInfo;
 
 import org.json.simple.JSONObject;
+
 import org.shanerx.mojang.Mojang;
 import org.shanerx.mojang.PlayerProfile;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class PlayerHead extends Widget {

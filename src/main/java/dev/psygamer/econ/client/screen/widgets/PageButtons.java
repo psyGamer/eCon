@@ -23,24 +23,22 @@ public class PageButtons extends Widget {
 		
 		this.parent = parent;
 		
-		this.prevPage = new Button(x, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("\u00AB"), button -> {
-			PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() - 1);
-		});
-		this.nextPage = new Button(x + guiWidth / 2 + margin / 2, y, guiWidth / 2 - margin / 2, guiHeight, new StringTextComponent("\u00BB"), button -> {
-			PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() + 1);
-		});
-
-//		this.visible = false;
+		this.prevPage = new Button(
+				x, y, guiWidth / 2 - margin / 2, guiHeight,
+				new StringTextComponent("\u00AB"),
+				
+				button -> PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() - 1)
+		);
+		this.nextPage = new Button(
+				x + guiWidth / 2 + margin / 2, y, guiWidth / 2 - margin / 2, guiHeight,
+				new StringTextComponent("\u00BB"),
+				
+				button -> PageButtons.this.parent.setCurrentPage(PageButtons.this.parent.getCurrentPage() + 1));
 	}
 	
 	@Override
 	public void render(final MatrixStack matrix, final int mouseX, final int mouseY, final float partialTicks) {
 		super.render(matrix, mouseX, mouseY, partialTicks);
-
-//		this.nextPage.x = mouseX;
-//		this.nextPage.y = mouseY;
-//		this.prevPage.x = mouseX + guiWidth / 2;
-//		this.prevPage.y = mouseY;
 		
 		this.nextPage.active = this.parent.getCurrentPage() != this.parent.getMaxPages();
 		this.prevPage.active = this.parent.getCurrentPage() != 0;
