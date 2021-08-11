@@ -1,16 +1,17 @@
 package dev.psygamer.econ.block.container;
 
+import dev.psygamer.econ.setup.ContainerRegistry;
 import dev.psygamer.econ.block.StoreBlock;
 import dev.psygamer.econ.block.container.slot.StorePreviewSlot;
 import dev.psygamer.econ.block.tileentity.StoreTileEntity;
-import dev.psygamer.econ.setup.ContainerRegistry;
+
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IWorldPosCallable;
 
 import java.util.Objects;
 

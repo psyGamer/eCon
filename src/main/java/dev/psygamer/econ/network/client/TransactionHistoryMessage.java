@@ -2,7 +2,9 @@ package dev.psygamer.econ.network.client;
 
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
+
 import net.minecraft.network.PacketBuffer;
+
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.ArrayList;

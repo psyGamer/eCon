@@ -2,11 +2,12 @@ package dev.psygamer.econ.client.screen.widgets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
 
 public class NewTransactionButton extends Button {
 	

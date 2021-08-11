@@ -7,7 +7,7 @@ issueTrackerURL = "https://github.com/psyGamer/eCon/issues"
 [[mods]]
 
 modId = "econ"
-version = "${file.jarVersion}"
+version = "1.0"
 
 displayName = "eCon"
 

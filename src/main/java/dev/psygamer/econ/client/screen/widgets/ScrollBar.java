@@ -4,10 +4,10 @@ import dev.psygamer.econ.client.screen.BankAccountScreen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.math.vector.Vector2f;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.widget.Widget;
 
 public class ScrollBar extends Widget {
 	

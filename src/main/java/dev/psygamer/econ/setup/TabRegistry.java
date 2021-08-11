@@ -1,4 +1,4 @@
-package dev.psygamer.econ.item;
+package dev.psygamer.econ.setup;
 
 import dev.psygamer.econ.item.tabs.EconomyTab;
 

@@ -1,7 +1,7 @@
 package dev.psygamer.econ.banking;
 
-
 import dev.psygamer.econ.ECon;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;

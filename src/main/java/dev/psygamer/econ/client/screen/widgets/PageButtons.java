@@ -1,10 +1,12 @@
 package dev.psygamer.econ.client.screen.widgets;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.psygamer.econ.client.screen.BankAccountScreen;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.StringTextComponent;
 
 public class PageButtons extends Widget {
 	

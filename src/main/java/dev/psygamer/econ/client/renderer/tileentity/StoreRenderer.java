@@ -4,6 +4,18 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.block.StoreBlock;
 import dev.psygamer.econ.block.tileentity.StoreTileEntity;
+
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Quaternion;
+import net.minecraft.util.math.vector.Vector2f;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.*;
+import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraft.world.LightType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -12,17 +24,6 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.*;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
 
 public class StoreRenderer extends TileEntityRenderer<StoreTileEntity> {
 	

@@ -2,14 +2,16 @@ package dev.psygamer.econ.setup;
 
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.block.container.StoreOwnerContainer;
-import dev.psygamer.econ.block.container.StoreCustomerContainer;
 import dev.psygamer.econ.block.container.StoreStorageContainer;
+import dev.psygamer.econ.block.container.StoreCustomerContainer;
+
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
 
 public class ContainerRegistry {
 	

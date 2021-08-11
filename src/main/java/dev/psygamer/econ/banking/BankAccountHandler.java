@@ -2,9 +2,11 @@ package dev.psygamer.econ.banking;
 
 import dev.psygamer.econ.network.client.BankAccountMessage;
 import dev.psygamer.econ.network.EConPacketHandler;
+
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
+
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
 import net.minecraftforge.fml.network.PacketDistributor;

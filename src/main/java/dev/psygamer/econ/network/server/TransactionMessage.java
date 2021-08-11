@@ -4,8 +4,10 @@ import dev.psygamer.econ.banking.BankAccount;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
-import net.minecraft.entity.player.ServerPlayerEntity;
+
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.entity.player.ServerPlayerEntity;
+
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.time.Instant;

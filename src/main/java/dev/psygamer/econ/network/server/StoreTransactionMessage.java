@@ -1,18 +1,20 @@
 package dev.psygamer.econ.network.server;
 
+import dev.psygamer.econ.block.tileentity.StoreTileEntity;
 import dev.psygamer.econ.banking.BankAccountHandler;
 import dev.psygamer.econ.banking.Transaction;
 import dev.psygamer.econ.banking.TransactionHandler;
-import dev.psygamer.econ.block.tileentity.StoreTileEntity;
+
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.item.ItemStack;
 import net.minecraft.block.BlockState;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.PacketBuffer;
+
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkEvent;
 

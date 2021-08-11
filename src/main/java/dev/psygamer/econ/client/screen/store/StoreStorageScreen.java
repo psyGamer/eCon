@@ -1,9 +1,6 @@
 package dev.psygamer.econ.client.screen.store;
 
-
 import dev.psygamer.econ.ECon;
-
-
 import dev.psygamer.econ.block.container.StoreStorageContainer;
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.StoreOwnerMessage;
@@ -14,7 +11,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;

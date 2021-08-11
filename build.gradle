@@ -15,7 +15,7 @@ apply plugin: "com.github.johnrengelman.shadow"
 
 group = 'dev.psygamer'
 archivesBaseName = 'econ'
-version = '0.1'
+version = '1.0'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 

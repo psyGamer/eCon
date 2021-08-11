@@ -1,9 +1,12 @@
-package dev.psygamer.econ.trades;
+package dev.psygamer.econ.setup;
+
+import dev.psygamer.econ.trades.*;
 
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class TradeRegistry {

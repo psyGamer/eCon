@@ -1,10 +1,12 @@
 package dev.psygamer.econ.data.client;
 
 import dev.psygamer.econ.ECon;
+
 import net.minecraft.data.DataGenerator;
+
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class EConItemModelProvider extends ItemModelProvider {
 	

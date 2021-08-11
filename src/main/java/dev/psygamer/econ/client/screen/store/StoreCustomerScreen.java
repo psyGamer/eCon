@@ -1,7 +1,5 @@
 package dev.psygamer.econ.client.screen.store;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import dev.psygamer.econ.ECon;
 import dev.psygamer.econ.block.container.slot.StorePreviewSlot;
 import dev.psygamer.econ.block.tileentity.StoreTileEntity;
@@ -10,17 +8,23 @@ import dev.psygamer.econ.client.screen.widgets.ImageButton;
 import dev.psygamer.econ.client.screen.widgets.TextField;
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.StoreTransactionMessage;
+
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.util.Util;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.*;
+import net.minecraft.item.ItemStack;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.*;
+
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
 import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)

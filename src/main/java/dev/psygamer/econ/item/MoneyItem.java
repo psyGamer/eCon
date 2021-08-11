@@ -1,18 +1,19 @@
 package dev.psygamer.econ.item;
 
 import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.setup.TabRegistry;
 import dev.psygamer.econ.banking.BankAccountHandler;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
+
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraft.stats.Stats;
+import net.minecraft.entity.player.PlayerEntity;
 
 public class MoneyItem extends Item {
 	

@@ -1,25 +1,25 @@
 package dev.psygamer.econ.commands;
 
+import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.banking.BankAccountHandler;
+import dev.psygamer.econ.banking.Transaction;
+import dev.psygamer.econ.banking.TransactionHandler;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.banking.BankAccountHandler;
-import dev.psygamer.econ.banking.Transaction;
-import dev.psygamer.econ.banking.TransactionHandler;
+
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 
-import javax.xml.soap.Text;
 import java.time.Instant;
 
 public class PayCommand {

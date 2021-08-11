@@ -1,20 +1,21 @@
 package dev.psygamer.econ.commands;
 
+import dev.psygamer.econ.ECon;
+import dev.psygamer.econ.banking.BankAccountHandler;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.banking.BankAccountHandler;
+
+import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 
 public class SetBalanceCommand {
 	

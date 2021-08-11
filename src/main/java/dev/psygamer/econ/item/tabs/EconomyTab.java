@@ -1,6 +1,7 @@
 package dev.psygamer.econ.item.tabs;
 
 import dev.psygamer.econ.setup.ItemRegistry;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

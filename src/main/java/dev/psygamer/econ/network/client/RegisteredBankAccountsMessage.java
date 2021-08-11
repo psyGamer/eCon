@@ -5,7 +5,6 @@ import dev.psygamer.econ.banking.BankAccountHandler;
 
 import net.minecraft.network.PacketBuffer;
 
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.nio.charset.Charset;

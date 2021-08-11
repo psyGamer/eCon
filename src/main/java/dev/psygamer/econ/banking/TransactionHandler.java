@@ -1,7 +1,6 @@
 package dev.psygamer.econ.banking;
 
 import dev.psygamer.econ.network.EConPacketHandler;
-import dev.psygamer.econ.network.client.BankAccountMessage;
 import dev.psygamer.econ.network.client.NewTransactionMessage;
 
 import net.minecraft.entity.player.ServerPlayerEntity;

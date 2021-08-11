@@ -3,16 +3,14 @@ package dev.psygamer.econ.setup;
 import dev.psygamer.econ.ECon;
 
 import dev.psygamer.econ.item.MoneyItem;
-import dev.psygamer.econ.item.TabRegistry;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
+
 import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
 
 public class ItemRegistry {
 	

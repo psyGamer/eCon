@@ -1,13 +1,13 @@
 package dev.psygamer.econ.block.container.slot;
 
 import dev.psygamer.econ.block.container.StoreOwnerContainer;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.entity.player.PlayerEntity;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
 
 public class StoreFakeSlot extends SlotItemHandler {
 	

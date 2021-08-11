@@ -3,25 +3,28 @@ package dev.psygamer.econ.client.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import dev.psygamer.econ.ECon;
-import dev.psygamer.econ.banking.BankAccountHandler;
-import dev.psygamer.econ.client.screen.widgets.PlayerHead;
 import dev.psygamer.econ.client.screen.widgets.TextField;
+import dev.psygamer.econ.client.screen.widgets.PlayerHead;
 import dev.psygamer.econ.network.EConPacketHandler;
 import dev.psygamer.econ.network.server.TransactionMessage;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.gui.widget.button.ImageButton;
+import dev.psygamer.econ.banking.BankAccountHandler;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.Color;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.ImageButton;
+
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+
 import org.lwjgl.glfw.GLFW;
 
 import java.util.UUID;

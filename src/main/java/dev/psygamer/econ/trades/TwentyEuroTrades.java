@@ -1,8 +1,9 @@
 package dev.psygamer.econ.trades;
 
 import dev.psygamer.econ.setup.ItemRegistry;
-import net.minecraft.item.ItemStack;
+
 import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BasicTrade;
 
 public class TwentyEuroTrades {

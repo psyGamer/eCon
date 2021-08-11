@@ -2,11 +2,9 @@ package dev.psygamer.econ.network;
 
 import dev.psygamer.econ.ECon;
 
-import dev.psygamer.econ.network.client.BankAccountMessage;
-import dev.psygamer.econ.network.client.NewTransactionMessage;
-import dev.psygamer.econ.network.client.RegisteredBankAccountsMessage;
-import dev.psygamer.econ.network.client.TransactionHistoryMessage;
+import dev.psygamer.econ.network.client.*;
 import dev.psygamer.econ.network.server.*;
+
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraftforge.fml.network.NetworkRegistry;
