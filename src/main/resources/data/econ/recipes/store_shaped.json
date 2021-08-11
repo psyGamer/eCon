@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"GGG",
+		"GCG",
+		"WSW"
+	],
+	"key": {
+		"G": {
+			"tag": "forge:glass/colorless"
+		},
+		"C": {
+			"item": "minecraft:chest"
+		},
+		"W": {
+			"tag": "minecraft:wooden_slabs"
+		},
+		"S": {
+			"item": "minecraft:smooth_stone_slab"
+		}
+	},
+	"result": {
+		"item": "econ:store_block",
+		"count": 1
+	}
+}
