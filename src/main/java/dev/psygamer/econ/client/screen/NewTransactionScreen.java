@@ -34,10 +34,10 @@ public class NewTransactionScreen extends Screen {
 	
 	@SubscribeEvent
 	public static void onKeyPressed(final InputEvent.KeyInputEvent event) {
-		if (Minecraft.getInstance().screen instanceof NewTransactionScreen &&
+		if (Minecraft.getInstance().screen instanceof NewTransactionScreen && (
 				event.getKey() == GLFW.GLFW_KEY_ENTER ||
 				event.getKey() == GLFW.GLFW_KEY_KP_ENTER
-		) {
+		)) {
 			((NewTransactionScreen) Minecraft.getInstance().screen).submitButton.onPress();
 		}
 	}
