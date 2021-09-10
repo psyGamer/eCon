@@ -32,12 +32,16 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Mod.EventBusSubscriber
 public class StoreBlock extends HorizontalBlock {
 	
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
@@ -62,6 +66,21 @@ public class StoreBlock extends HorizontalBlock {
 			Block.box(1, 0, 1, 15, 1, 15),
 			Block.box(1.2690301168721785, 0.9043291419087276, 1.5, 2.2690301168721785, 2.9043291419087276, 14.5)
 	).reduce((v1, v2) -> VoxelShapes.join(v1, v2, IBooleanFunction.OR)).get();
+	
+	@SubscribeEvent
+	public static void onBlockBreak(final BlockEvent.BreakEvent event) {
+		if (event.getWorld().isClientSide())
+			return;
+		
+		final TileEntity tileEntity = event.getWorld().getBlockEntity(event.getPos());
+		
+		if (tileEntity instanceof StoreTileEntity) {
+			final StoreTileEntity storeTileEntity = (StoreTileEntity) tileEntity;
+			final PlayerEntity player = event.getPlayer();
+			
+			event.setCanceled(!player.getUUID().equals(storeTileEntity.getOwner()));
+		}
+	}
 	
 	public StoreBlock() {
 		super(
