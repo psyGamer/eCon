@@ -23,7 +23,7 @@ group = 'dev.psygamer'
 version = '1.0'
 
 java {
-    archivesBaseName = 'econwf'
+    archivesBaseName = 'econ'
     toolchain.languageVersion = JavaLanguageVersion.of(8)
 }
 
@@ -35,6 +35,8 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -48,6 +50,8 @@ minecraft {
         server {
             workingDirectory project.file('run')
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -61,6 +65,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
 
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -81,10 +87,16 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven { url 'https://thedarkcolour.github.io/KotlinForForge/' }
+    maven { url 'https://maven.blamejared.com' }
+    flatDir {
+        dirs '../Mods/Wireframe/build/libs'
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
+
+    implementation "dev.psygamer:wireframe:0.1:dev"
     implementation "thedarkcolour:kotlinforforge:1.16.0"
 }
 

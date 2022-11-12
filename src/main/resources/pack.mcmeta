@@ -1,7 +1,14 @@
 {
+<<<<<<< HEAD
    "pack": {
-	  "description": "eConWF resources",
+	  "description": "eCon resources",
 	  "pack_format": 6,
 	  "_comment": "A pack_format of 6 requires json lang files and some texture changes from 1.16.2. Note: we require v6 pack meta for all mods."
    }
+=======
+	"pack": {
+		"description": "eCon Resources",
+		"pack_format": 6
+	}
+>>>>>>> 17a36a761286ef4a14f3fb573a71b3a79a8e3a71
 }

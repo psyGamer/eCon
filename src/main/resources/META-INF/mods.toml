@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 modLoader = "kotlinforforge"
 loaderVersion = "[1.16,)"
 
@@ -5,7 +6,7 @@ license = "All Rights Reserved"
 #issueTrackerURL="http://my.issue.tracker/"
 
 [[mods]]
-modId = "econwf"
+modId = "econ"
 version = "1.0"
 displayName = "eConWF"
 
@@ -19,16 +20,59 @@ description = '''
 
 '''
 
-[[dependencies.econwf]]
+[[dependencies.econ]]
 modId = "minecraft"
 versionRange = "[1.16.5,1.17)"
 mandatory = true
 side = "BOTH"
 ordering = "NONE"
 
-[[dependencies.econwf]]
+[[dependencies.econ]]
 modId = "forge"
 versionRange = "[36,)"
 mandatory = true
 side = "BOTH"
 ordering = "NONE"
+=======
+modLoader = "javafml"
+loaderVersion = "[35,)"
+license = "MIT License"
+
+issueTrackerURL = "https://github.com/psyGamer/eCon/issues"
+
+[[mods]]
+
+modId = "econ"
+version = "0.1"
+
+displayName = "eCon"
+
+# updateJSONURL="https://curseforge.com/minecraft/mc-mods/mod"
+displayURL="https://github.com/psyGamer/eCon"
+logoFile="icon.png"
+
+# credits="Thanks for this example mod goes to Java"
+authors = "psyGamer"
+
+description = '''
+Bring economy into your life.
+'''
+
+[[dependencies.econ]]
+    modId = "forge"
+    versionRange = "[35,)"
+
+    ordering = "NONE"
+    side = "BOTH"
+
+    mandatory = true
+
+[[dependencies.econ]]
+    modId = "minecraft"
+    versionRange = "[1.16.4,1.17)"
+
+    ordering = "NONE"
+    side = "BOTH"
+
+    mandatory = true
+>>>>>>> 17a36a761286ef4a14f3fb573a71b3a79a8e3a71
