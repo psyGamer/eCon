@@ -8,7 +8,7 @@ license = "All Rights Reserved"
 [[mods]]
 modId = "econ"
 version = "1.0"
-displayName = "eConWF"
+displayName = "eCon"
 
 #updateJSONURL="http://myurl.me/"
 #displayURL="http://example.com/"
@@ -33,7 +33,7 @@ versionRange = "[36,)"
 mandatory = true
 side = "BOTH"
 ordering = "NONE"
-=======
+== = = = = =
 modLoader = "javafml"
 loaderVersion = "[35,)"
 license = "MIT License"
@@ -48,8 +48,8 @@ version = "0.1"
 displayName = "eCon"
 
 # updateJSONURL="https://curseforge.com/minecraft/mc-mods/mod"
-displayURL="https://github.com/psyGamer/eCon"
-logoFile="icon.png"
+displayURL = "https://github.com/psyGamer/eCon"
+logoFile = "icon.png"
 
 # credits="Thanks for this example mod goes to Java"
 authors = "psyGamer"
@@ -59,20 +59,20 @@ Bring economy into your life.
 '''
 
 [[dependencies.econ]]
-    modId = "forge"
-    versionRange = "[35,)"
+modId = "forge"
+versionRange = "[35,)"
 
-    ordering = "NONE"
-    side = "BOTH"
+ordering = "NONE"
+side = "BOTH"
 
-    mandatory = true
+mandatory = true
 
 [[dependencies.econ]]
-    modId = "minecraft"
-    versionRange = "[1.16.4,1.17)"
+modId = "minecraft"
+versionRange = "[1.16.4,1.17)"
 
-    ordering = "NONE"
-    side = "BOTH"
+ordering = "NONE"
+side = "BOTH"
 
-    mandatory = true
+mandatory = true
 >>>>>>> 17a36a761286ef4a14f3fb573a71b3a79a8e3a71

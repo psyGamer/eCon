@@ -1,7 +1,7 @@
-package dev.psygamer.econwf
+package dev.psygamer.econ
 
 import net.minecraftforge.fml.common.Mod
-import dev.psygamer.econwf.block.StoreBlock
+import dev.psygamer.econ.block.StoreBlock
 import dev.psygamer.wireframe.Wireframe
 
 @Mod("econ") // TODO: Let Wireframe handle this
